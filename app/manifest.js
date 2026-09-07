@@ -2,9 +2,9 @@
 // 表示値のほかに fields（原本値・空欄フラグ・元列名）と isolation（他受講生の識別子）を
 // 併記する。fields と isolation はカルテには出さず、検品にだけ使う。
 
-import { BLANK_DISPLAY, FIELDS, SECTIONS } from './fields.js?v=20260907174035';
-import { lookupJoinMonth } from './csv.js?v=20260907174035';
-import { normalize } from './text.js?v=20260907174035';
+import { BLANK_DISPLAY, FIELDS, SECTIONS } from './fields.js?v=20260908011822';
+import { lookupJoinMonth } from './csv.js?v=20260908011822';
+import { normalize } from './text.js?v=20260908011822';
 
 const TIMESTAMP_RE = /^(20\d{2})[/\-年](\d{1,2})/;
 

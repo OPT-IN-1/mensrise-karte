@@ -1,9 +1,9 @@
 // このブラウザ（IndexedDB）と Google ドライブの間で、作業データと写真を合わせる。
 // 新しいほうを正とする。両方が変わっていた場合は、更新時刻が後のほうを採用する。
 
-import * as store from './store.js?v=20260907174035';
-import * as realDrive from './drive.js?v=20260907174035';
-import { PHOTO_ROLES } from '../app/fields.js?v=20260907174035';
+import * as store from './store.js?v=20260908011822';
+import * as realDrive from './drive.js?v=20260908011822';
+import { PHOTO_ROLES } from '../app/fields.js?v=20260908011822';
 
 const ROLES = PHOTO_ROLES.map((r) => r.role);
 const stampOf = (job, role) => String(((job.photos || {})[role] || {}).at || '');

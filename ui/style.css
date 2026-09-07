@@ -186,3 +186,34 @@ nav.steps button.done::after { content: " ✓"; font-size: 11px; }
 }
 .act.flash { animation: flashBtn 1s ease-in-out 4; }
 input.flash { animation: flashBtn 1s ease-in-out 4; }
+
+/* ── ID・パスワードの入口 ───────────────────────── */
+body.locked > *:not(#gate) { display: none !important; }
+#gate {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+  background: #1A1A1A; padding: 24px;
+}
+#gate form {
+  width: min(360px, 100%); background: #fff; border-radius: 6px;
+  padding: 30px 28px 26px; box-shadow: 0 20px 60px -20px rgba(0,0,0,.6);
+}
+#gate .brand {
+  display: block; color: var(--gold); letter-spacing: .22em;
+  font-weight: 700; font-size: 11px; margin-bottom: 12px;
+}
+#gate h1 { margin: 0 0 6px; font-size: 18px; color: #1A1A1A; }
+#gate p { margin: 0 0 18px; font-size: 12.5px; color: #6B7280; line-height: 1.7; }
+#gate label {
+  display: block; font-size: 12px; font-weight: 700; color: #1A1A1A; margin-bottom: 12px;
+}
+#gate input {
+  display: block; width: 100%; margin-top: 5px; padding: 9px 10px;
+  border: 1px solid #C9C9D1; border-radius: 4px; font-size: 14px; font-weight: 400;
+}
+#gate input:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+#gate button {
+  width: 100%; margin-top: 6px; padding: 11px; border: 0; border-radius: 4px;
+  background: var(--gold); color: #1A1A1A; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+#gate button:hover { filter: brightness(1.06); }
+#gate #gateMsg { margin: 12px 0 0; color: var(--ng); font-weight: 700; min-height: 1.2em; }

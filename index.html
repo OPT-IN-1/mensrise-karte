@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="assets/icon-192.png">
-<link rel="stylesheet" href="ui/style.css?v=20260907174035">
+<link rel="stylesheet" href="ui/style.css?v=20260908011822">
 </head>
 <body>
 <header class="app">
@@ -339,6 +339,68 @@
 </div>
 <div id="toast"></div>
 <iframe id="printFrame"></iframe>
-<script type="module" src="ui/app.js?v=20260907174035"></script>
+<div id="gate">
+  <form id="gateForm" autocomplete="on">
+    <span class="brand">MEN'S RISE</span>
+    <h1>個人カルテ作成ツール</h1>
+    <p>社内用のツールです。IDとパスワードを入れてください。</p>
+    <label>ID<input id="gateUser" name="username" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" required></label>
+    <label>パスワード<input id="gatePass" name="password" type="password" autocomplete="current-password" required></label>
+    <button type="submit">開く</button>
+    <p id="gateMsg" role="alert"></p>
+  </form>
+</div>
+<script>
+// 画面をIDとパスワードで隠す。合っている間だけツール本体を読み込む。
+// ※静的サイトのため、隠せるのは画面まで。ファイルを直接開かれると中身は読めます。
+(function () {
+  var SALT = '32f1a68a0e93a7b2';
+  var USER = '797fedaa5f2b7c5844962d04132bab12da17cdea305ea52a0801de0dc09d390f';
+  var PASS = '3b1facd724390ec1dc7ec7c49fde80a5edd458376d9704e64de58e8e9f96cf9d';
+  var KEY = 'karte_gate';
+
+  function hash(text) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(SALT + text)).then(function (buf) {
+      return [].map.call(new Uint8Array(buf), function (b) {
+        return ('0' + b.toString(16)).slice(-2);
+      }).join('');
+    });
+  }
+
+  function openTool() {
+    var gate = document.getElementById('gate');
+    if (gate) gate.remove();
+    document.body.classList.remove('locked');
+    var tag = document.createElement('script');
+    tag.type = 'module';
+    tag.src = 'ui/app.js?v=20260908011822';
+    document.body.appendChild(tag);
+  }
+
+  try {
+    if (localStorage.getItem(KEY) === PASS) { openTool(); return; }
+  } catch (e) { /* 保存が使えないブラウザでも入力すれば使える */ }
+
+  document.body.classList.add('locked');
+  document.getElementById('gateForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var msg = document.getElementById('gateMsg');
+    msg.textContent = '確認しています…';
+    Promise.all([
+      hash(document.getElementById('gateUser').value.trim()),
+      hash(document.getElementById('gatePass').value),
+    ]).then(function (got) {
+      if (got[0] !== USER || got[1] !== PASS) {
+        msg.textContent = 'IDかパスワードが違います。';
+        document.getElementById('gatePass').value = '';
+        document.getElementById('gatePass').focus();
+        return;
+      }
+      try { localStorage.setItem(KEY, PASS); } catch (e) { /* 保存できなくても続行 */ }
+      openTool();
+    });
+  });
+})();
+</script>
 </body>
 </html>
