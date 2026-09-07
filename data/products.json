@@ -1,0 +1,830 @@
+{
+  "note": "受講生カルテに載せる商品。価格は福利厚生シート（【Men's Rise】福利厚生シート - 商品一覧）の取り込み結果。価格を変えるときは catalog を更新すれば、カルテ全体に反映される。",
+  "show_products": true,
+  "show_products_note": "false にすると商品名・価格・購入先を伏せ、『推奨スキンケア』等の抽象表現に戻る（内部ナレッジ既定の運用）。",
+  "channel_labels": {
+    "mr": "MR限定価格",
+    "amazon": "Amazonにて購入"
+  },
+  "skincare": {
+    "_note": "肌タイプ別の5点セット。クレンジング→洗顔→化粧水→美容液→保湿の順。noteの美容ガイドとMen's Rise福利厚生品を突き合わせて構成。",
+    "default": [
+      {
+        "icon": "🧴",
+        "catalog": "ギュープレミアムクレンジングオイル",
+        "label": "ギュープレミアム クレンジングオイル",
+        "desc": "4プッシュ。乾いた顔と手に、下から上へくるくる→少し濡らして乳化→30〜34℃のぬるま湯で流す。90秒以内。",
+        "image": "gue-cleansing-oil.jpg"
+      },
+      {
+        "icon": "🧼",
+        "catalog": "ギュープレミアム洗顔ソープ",
+        "label": "ギュープレミアム 洗顔ソープ",
+        "desc": "4プッシュ以上をよく泡立て、摩擦をかけずに洗う。洗顔は1日2回まで。",
+        "image": "gue-face-soap.jpg"
+      },
+      {
+        "icon": "💧",
+        "catalog": "ギュープレミアムコンプレッションリキッド",
+        "label": "ギュー コンプレッションリキッド",
+        "desc": "500円玉大。手で温めてから顔全体へ。朝晩必須。",
+        "image": "gue-compression-liquid.jpg"
+      },
+      {
+        "icon": "✨",
+        "catalog": "Trube",
+        "label": "Trube グロッシーセラム",
+        "desc": "夜のケアに追加する美容液。",
+        "image": "trube-glossy-serum.jpg"
+      },
+      {
+        "icon": "🫙",
+        "label": "TOUT VERT ナノエマルジョン",
+        "channel": "amazon",
+        "desc": "パール1粒分（乾燥時は2粒まで）。水分を閉じ込める。",
+        "role": "乳液",
+        "image": "tout-vert-nano-emulsion.jpg"
+      }
+    ],
+    "普通肌": [
+      {
+        "icon": "🧴",
+        "catalog": "ギュープレミアムクレンジングオイル",
+        "label": "ギュープレミアム クレンジングオイル",
+        "desc": "4プッシュ。乾いた顔と手に、下から上へくるくる→少し濡らして乳化→30〜34℃のぬるま湯で流す。90秒以内。",
+        "image": "gue-cleansing-oil.jpg"
+      },
+      {
+        "icon": "🧼",
+        "catalog": "ギュープレミアム洗顔ソープ",
+        "label": "ギュープレミアム 洗顔ソープ",
+        "desc": "4プッシュ以上をよく泡立て、摩擦をかけずに洗う。洗顔は1日2回まで。",
+        "image": "gue-face-soap.jpg"
+      },
+      {
+        "icon": "💧",
+        "catalog": "ギュープレミアムコンプレッションリキッド",
+        "label": "ギュー コンプレッションリキッド",
+        "desc": "500円玉大。手で温めてから顔全体へ。朝晩必須。",
+        "image": "gue-compression-liquid.jpg"
+      },
+      {
+        "icon": "✨",
+        "catalog": "Trube",
+        "label": "Trube グロッシーセラム",
+        "desc": "夜のケアに追加する美容液。",
+        "image": "trube-glossy-serum.jpg"
+      },
+      {
+        "icon": "🫙",
+        "label": "TOUT VERT ナノエマルジョン",
+        "channel": "amazon",
+        "desc": "パール1粒分（乾燥時は2粒まで）。水分を閉じ込める。",
+        "role": "乳液",
+        "image": "tout-vert-nano-emulsion.jpg"
+      }
+    ],
+    "混合肌": [
+      {
+        "icon": "🧴",
+        "catalog": "ギュープレミアムクレンジングオイル",
+        "label": "ギュープレミアム クレンジングオイル",
+        "desc": "4プッシュ。乾いた顔と手に、下から上へくるくる→少し濡らして乳化→30〜34℃のぬるま湯で流す。90秒以内。",
+        "image": "gue-cleansing-oil.jpg"
+      },
+      {
+        "icon": "🧼",
+        "catalog": "ギュープレミアム洗顔ソープ",
+        "label": "ギュープレミアム 洗顔ソープ",
+        "desc": "4プッシュ以上をよく泡立て、摩擦をかけずに洗う。洗顔は1日2回まで。",
+        "image": "gue-face-soap.jpg"
+      },
+      {
+        "icon": "💧",
+        "catalog": "ギュープレミアムコンプレッションリキッド",
+        "label": "ギュー コンプレッションリキッド",
+        "desc": "500円玉大。手で温めてから顔全体へ。朝晩必須。",
+        "image": "gue-compression-liquid.jpg"
+      },
+      {
+        "icon": "✨",
+        "catalog": "Trube",
+        "label": "Trube グロッシーセラム",
+        "desc": "夜のケアに追加する美容液。",
+        "image": "trube-glossy-serum.jpg"
+      },
+      {
+        "icon": "🫙",
+        "label": "TOUT VERT ナノエマルジョン",
+        "channel": "amazon",
+        "desc": "パール1粒分（乾燥時は2粒まで）。水分を閉じ込める。",
+        "role": "乳液",
+        "image": "tout-vert-nano-emulsion.jpg"
+      }
+    ],
+    "乾燥肌": [
+      {
+        "icon": "🧴",
+        "catalog": "ギュープレミアムクレンジングオイル",
+        "label": "ギュープレミアム クレンジングオイル",
+        "desc": "4プッシュ。乾いた顔と手に、下から上へくるくる→少し濡らして乳化→30〜34℃のぬるま湯で流す。90秒以内。",
+        "image": "gue-cleansing-oil.jpg"
+      },
+      {
+        "icon": "🧼",
+        "catalog": "ギュープレミアム洗顔ソープ",
+        "label": "ギュープレミアム 洗顔ソープ",
+        "desc": "4プッシュ以上をよく泡立て、摩擦をかけずに洗う。洗顔は1日2回まで。",
+        "image": "gue-face-soap.jpg"
+      },
+      {
+        "icon": "💧",
+        "label": "ミノン アミノモイスト モイストチャージ ローション",
+        "channel": "amazon",
+        "desc": "500円玉大を2回重ねる。乾燥肌はアミノ酸系で水分を先に入れる。",
+        "image": "minon-amino-lotion.jpg"
+      },
+      {
+        "icon": "✨",
+        "catalog": "Trube",
+        "label": "Trube グロッシーセラム",
+        "desc": "夜のケアに追加する美容液。",
+        "image": "trube-glossy-serum.jpg"
+      },
+      {
+        "icon": "🫙",
+        "catalog": "ギュープレミアムクリーム",
+        "label": "ギュープレミアム クリーム",
+        "desc": "パール1粒分（乾燥時は2粒まで）。セラミドで蓋をする。",
+        "role": "クリーム"
+      }
+    ],
+    "脂性肌": [
+      {
+        "icon": "🧴",
+        "catalog": "ギュープレミアムクレンジングオイル",
+        "label": "ギュープレミアム クレンジングオイル",
+        "desc": "4プッシュ。乾いた顔と手に、下から上へくるくる→少し濡らして乳化→30〜34℃のぬるま湯で流す。90秒以内。",
+        "image": "gue-cleansing-oil.jpg"
+      },
+      {
+        "icon": "🧼",
+        "catalog": "ギュープレミアム洗顔ソープ",
+        "label": "ギュープレミアム 洗顔ソープ",
+        "desc": "4プッシュ以上をよく泡立てて洗う。脂性肌は石鹸系でしっかり落とす。1日2回まで。",
+        "image": "gue-face-soap.jpg"
+      },
+      {
+        "icon": "💧",
+        "label": "オードムーゲ 薬用ローション",
+        "channel": "amazon",
+        "desc": "500円玉大。テカり・ニキビが気になる部位を中心に。",
+        "image": "oudoumuge-lotion.jpg"
+      },
+      {
+        "icon": "✨",
+        "catalog": "Trube",
+        "label": "Trube グロッシーセラム",
+        "desc": "夜のケアに追加する美容液。",
+        "image": "trube-glossy-serum.jpg"
+      },
+      {
+        "icon": "🫙",
+        "label": "キュレル 皮脂トラブルケア 保湿ジェル",
+        "channel": "amazon",
+        "desc": "パール1粒分。オイルフリーで保湿。インナードライを防ぐ。",
+        "role": "保湿ジェル",
+        "image": "curel-sebum-gel.jpg"
+      }
+    ]
+  },
+  "sunscreen": {
+    "icon": "☀️",
+    "label": "SKIN1004 センテラ 日焼け止め",
+    "channel": "amazon",
+    "desc": "パール2粒分。日常はSPF30、長時間の外出はSPF50。毎朝スキンケアの最後に塗る。",
+    "image": "skin1004-uv-cream.jpg"
+  },
+  "nail": {
+    "icon": "💅",
+    "label": "Kanavi ガラスの爪やすり",
+    "channel": "amazon",
+    "desc": "週1回、爪の長さと形を整える。",
+    "image": "kanavi-glass-nail-file.jpg"
+  },
+  "hair": [
+    {
+      "icon": "🌬️",
+      "catalog": "HOLISTIC cures マグネットヘアプロ ドライヤーゼロブラックプラス HCD-G07CB",
+      "label": "HOLISTIC cures マグネットヘアプロ ドライヤー",
+      "desc": "根元から素早く乾かす。",
+      "image": "holistic-cures-dryer.jpg"
+    },
+    {
+      "icon": "🪮",
+      "catalog": "◆クレイツ エレメアF 指コテ 海外兼用",
+      "label": "クレイツ エレメアF 指コテ",
+      "desc": "低温で毛流れを整える。",
+      "image": "crates-elemea-f.jpg"
+    },
+    {
+      "icon": "🧴",
+      "catalog": "ナプラ N. SHEAモイスチャーシャンプー 300ml",
+      "label": "N. SHEA モイスチャーシャンプー",
+      "desc": "頭皮を洗う意識で。水分バランスを整える。",
+      "image": "n-shea-shampoo.jpg"
+    },
+    {
+      "icon": "🧴",
+      "catalog": "N.SHEAトリートメントスムース240ｇ",
+      "label": "N. SHEA トリートメントスムース",
+      "desc": "毛先中心に。伸ばす期間のダメージを防ぐ。",
+      "image": "n-shea-treatment.jpg"
+    },
+    {
+      "icon": "💧",
+      "catalog": "ナプラ N. エヌドット シアオイル 150ml",
+      "label": "N. エヌドット シアオイル",
+      "desc": "ドライ前に。乾燥と広がりを抑える。",
+      "image": "n-shea-oil.jpg"
+    },
+    {
+      "icon": "🫙",
+      "catalog": "ナ プラ エヌドット N.オム ジェルバーム 100g",
+      "label": "N. オム ジェルバーム",
+      "desc": "仕上げのまとまりとツヤを出す。",
+      "image": "n-homme-gel-balm.jpg"
+    },
+    {
+      "icon": "💨",
+      "catalog": "ルベル トリエ スプレー 10 170g 国内正規品 オリジナル特典",
+      "label": "ルベル トリエ スプレー 10",
+      "desc": "セットをキープする。夕方の崩れを防ぐ。",
+      "image": "lebel-trie-spray-10.jpg"
+    }
+  ],
+  "styling": {
+    "_note": "目標ヘアスタイル・希望印象・髪の悩みの文言から1点だけ選ぶ。上から順に判定し、当たらなければ default。福利厚生シートのワックスは用途が明記されているのでそれに従う。",
+    "rules": [
+      {
+        "id": "ST-1",
+        "match": [
+          "パーマ",
+          "くせ毛",
+          "癖毛",
+          "ウェーブ",
+          "カール"
+        ],
+        "icon": "🌀",
+        "catalog": "コア カール&ウェーブ パーマや癖毛の人むけ",
+        "label": "コア カール&ウェーブ",
+        "desc": "パーマ・くせ毛の動きを活かす。"
+      },
+      {
+        "id": "ST-2",
+        "match": [
+          "ベリーショート",
+          "短髪",
+          "ショート",
+          "ツーブロック",
+          "刈り上げ"
+        ],
+        "icon": "🧱",
+        "catalog": "コア ハーデスト 短髪専用",
+        "label": "コア ハーデスト",
+        "desc": "短髪をしっかり立ち上げてキープする。"
+      },
+      {
+        "id": "ST-3",
+        "match": [
+          "マット",
+          "無造作",
+          "エアリー",
+          "ふわっと"
+        ],
+        "icon": "🍂",
+        "catalog": "コア ドライハード ふわっとマットな質感を出したい方にオススメ、センターパートやマッシュにオススメWax",
+        "label": "コア ドライハード",
+        "desc": "ふわっとマットな質感を出す。"
+      },
+      {
+        "id": "ST-4",
+        "match": [
+          "ツヤ",
+          "艶",
+          "濡れ感",
+          "かきあげ",
+          "オールバック",
+          "タイト"
+        ],
+        "icon": "💎",
+        "catalog": "コア ダイブ 艶系を出したい時に 短髪や他の Waxと混ぜたりパーマに向いてる",
+        "label": "コア ダイブ",
+        "desc": "濡れ感・ツヤを出したいときに。"
+      },
+      {
+        "id": "ST-5",
+        "match": [
+          "センターパート",
+          "マッシュ",
+          "ミディアム",
+          "ロング"
+        ],
+        "icon": "✋",
+        "catalog": "コア ライトハード マッシュやセンターパート 動かしたい時",
+        "label": "コア ライトハード",
+        "desc": "マッシュ・センターパートを動かしたいときに。"
+      },
+      {
+        "id": "ST-6",
+        "match": [
+          "ナチュラル",
+          "自然"
+        ],
+        "icon": "🌿",
+        "catalog": "コア シャイン&モイスト ナチュラルヘア",
+        "label": "コア シャイン&モイスト",
+        "desc": "自然なまとまりとツヤを出す。"
+      }
+    ],
+    "default": {
+      "id": "ST-0",
+      "icon": "✋",
+      "catalog": "コア ライトハード マッシュやセンターパート 動かしたい時",
+      "label": "コア ライトハード",
+      "desc": "マッシュ・センターパートを動かしたいときに。"
+    }
+  },
+  "hair_steps": {
+    "morning": [
+      [
+        "1",
+        "根元からしっかり濡らす",
+        "寝癖リセット"
+      ],
+      [
+        "2",
+        "ドライヤー",
+        "HOLISTIC"
+      ],
+      [
+        "3",
+        "アイロン（低温）",
+        "指コテ"
+      ],
+      [
+        "4",
+        "スタイリング",
+        "{styling}"
+      ]
+    ],
+    "night": [
+      [
+        "1",
+        "シャンプー＋トリートメント",
+        "N. SHEA"
+      ],
+      [
+        "2",
+        "タオルドライ＋オイル",
+        "シアオイル"
+      ],
+      [
+        "3",
+        "ドライヤー",
+        "HOLISTIC"
+      ]
+    ]
+  },
+  "tasks": {
+    "skincare_buy": "おすすめスキンケア商品を購入する",
+    "hair_buy": "おすすめヘアケア・セット商品を購入する",
+    "buy_note": "Men's Rise経由での購入がおすすめです（限定価格あり）。",
+    "buy_task_suffix": "を購入する"
+  },
+  "catalog_note": "福利厚生シートの全商品。カルテに載せる商品はここから catalog キーで参照する。price はメンズライズ価格、list_price は定価。link は発注用の内部参照でカルテには出さない。",
+  "catalog": [
+    {
+      "use": "美容",
+      "name": "Trube",
+      "price": "¥4,680",
+      "list_price": "¥7,800",
+      "link": "https://amzn.asia/d/0ero2RB5",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナプラ N. SHEAモイスチャーシャンプー 300ml",
+      "price": "¥2,100",
+      "list_price": "¥2,800",
+      "link": "https://amzn.asia/d/0c6uf9FB",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "N.SHEAトリートメントスムース240ｇ",
+      "price": "¥2,100",
+      "list_price": "¥2,800",
+      "link": "https://amzn.asia/d/099hbZaY",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナプラ N. エヌドット シアオイル 150ml",
+      "price": "¥2,100",
+      "list_price": "¥2,600",
+      "link": "https://amzn.asia/d/0eQIzhMC",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナ プラ エヌドット N.オム ジェルバーム 100g",
+      "price": "¥1,470",
+      "list_price": "¥1,800",
+      "link": "https://amzn.asia/d/0cEAnGPZ",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナプラ N. オムシアクリーム 100g",
+      "price": "¥1,470",
+      "list_price": "¥1,800",
+      "link": "https://amzn.asia/d/0cuznKvs",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナプラ N. オムジェルグリース 80g",
+      "price": "¥1,582",
+      "list_price": "¥2,000",
+      "link": "https://amzn.asia/d/06gdwtGt",
+      "note": "⚠️amazoの方が安い場合があります。"
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ア リ ミ ノメ ン ハード ミルク 100g ヘア ワックス",
+      "price": "¥1,400",
+      "list_price": "¥2,000",
+      "link": "https://amzn.asia/d/0cUTVazH",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アリミノ メン フリーズキープ グリース 100g",
+      "price": "¥1,400",
+      "list_price": "¥2,000",
+      "link": "https://amzn.asia/d/0g7gP7eQ",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "NAKANO ナカノ モデニカ ワックス 6 ウルトラスーパーハード 60g ヘアワックス",
+      "price": "¥980",
+      "list_price": "¥1,320",
+      "link": "https://amzn.asia/d/0e071Rds",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナカノ NAKANO モデニカ ナチュラルJ 90g",
+      "price": "¥1,680",
+      "list_price": "¥1,980",
+      "link": "https://amzn.asia/d/0d4OYaXk",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナカノ モデニカ ナチュラル Ｓ 100g",
+      "price": "¥1,820",
+      "list_price": "¥2,200",
+      "link": "https://amzn.asia/d/00ULzSeC",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ルベル トリエ スプレー 10 170g 国内正規品 オリジナル特典",
+      "price": "¥1,400",
+      "list_price": "¥2,980",
+      "link": "https://amzn.asia/d/04zX04Os",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アリミノ メン ハードバーム メンズ 髪 ヘア バーム 60g",
+      "price": "¥1,820",
+      "list_price": "¥2,500",
+      "link": "https://amzn.asia/d/07zk7md9",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "NAKANO ナカノ モデニカ ワックス スモーキーマット60g ヘアワックス",
+      "price": "¥980",
+      "list_price": "¥1,320",
+      "link": "https://amzn.asia/d/0eQnLqA8",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナプラ N. SHEAスムースシャンプー 750ミリ",
+      "price": "¥4,200",
+      "list_price": "¥4,600",
+      "link": "https://amzn.asia/d/04FwltBs",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナプラ N. SHEAスムーストリートメント750ミリ",
+      "price": "¥4,200",
+      "list_price": "¥4,820",
+      "link": "https://amzn.asia/d/00R1eaoZ",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ナプラ N. エヌドット シアミルク150ml",
+      "price": "¥2,100",
+      "list_price": "¥2,780",
+      "link": "https://amzn.asia/d/00U6ysgR",
+      "note": ""
+    },
+    {
+      "use": "美容",
+      "name": "ギュープレミアムオイル",
+      "price": "¥5,500",
+      "list_price": "¥8,800",
+      "link": "https://amzn.asia/d/05z7cJOq",
+      "note": ""
+    },
+    {
+      "use": "美容",
+      "name": "ギュープレミアムコンプレッションリキッド",
+      "price": "¥6,600",
+      "list_price": "¥9,900",
+      "link": "https://item.rakuten.co.jp/pureco/prc-s-8702260279/",
+      "note": ""
+    },
+    {
+      "use": "美容",
+      "name": "ギュープレミアムクリーム",
+      "price": "¥4,400",
+      "list_price": "¥6,600",
+      "link": "https://amzn.asia/d/0i9HvcgL",
+      "note": ""
+    },
+    {
+      "use": "美容",
+      "name": "ギュープレミアムクレンジングオイル",
+      "price": "¥2,900",
+      "list_price": "¥4,400",
+      "link": "https://item.rakuten.co.jp/charming/gue-cleansing/?scid=wi_ich_iphoneapp_item_share",
+      "note": ""
+    },
+    {
+      "use": "美容",
+      "name": "ギュープレミアム洗顔ソープ",
+      "price": "¥1,300",
+      "list_price": "¥1,980",
+      "link": "https://item.rakuten.co.jp/c-urban/4573373820088/?scid=wi_ich_iphoneapp_item_share",
+      "note": ""
+    },
+    {
+      "use": "美容",
+      "name": "ギュープレミアムバスソルト",
+      "price": "¥2,100",
+      "list_price": "¥3,300",
+      "link": "https://item.rakuten.co.jp/m4-magic/gue-premium-salt/?iasid=07rpp_10095___3e-mscxtpw6-s-bfe1301b-7f1f-44a9-90fc-bd1d6d418dc2",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "HOLISTIC cures マグネットヘアプロ ドライヤーゼロブラックプラス HCD-G07CB",
+      "price": "¥21,000",
+      "list_price": "¥32,450",
+      "link": "https://amzn.asia/d/0iAIKUqK",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "◆クレイツ エレメアF 指コテ 海外兼用",
+      "price": "¥7,700",
+      "list_price": "¥14,300",
+      "link": "https://amzn.asia/d/09TiMNJC",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "コア ハーデスト 短髪専用",
+      "price": "¥1,980",
+      "list_price": "¥1,980",
+      "link": "https://coar.jp/styling/",
+      "note": "正規品は美容室でしか販売していないため、取り扱いが定価になっております。"
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "コア ライトハード マッシュやセンターパート 動かしたい時",
+      "price": "¥1,980",
+      "list_price": "¥1,980",
+      "link": "https://coar.jp/styling/",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "コア カール&ウェーブ パーマや癖毛の人むけ",
+      "price": "¥1,980",
+      "list_price": "¥1,980",
+      "link": "https://coar.jp/styling/",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "コア シャイン&モイスト ナチュラルヘア",
+      "price": "¥1,980",
+      "list_price": "¥1,980",
+      "link": "https://coar.jp/styling/",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "コア ダイブ 艶系を出したい時に 短髪や他の Waxと混ぜたりパーマに向いてる",
+      "price": "¥3,300",
+      "list_price": "¥3,300",
+      "link": "https://coar.jp/styling/",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "コア ドライハード ふわっとマットな質感を出したい方にオススメ、センターパートやマッシュにオススメWax",
+      "price": "¥1,980",
+      "list_price": "¥1,980",
+      "link": "https://hrbayshoreny.equalityjp.com/goods/coar/dry-hard",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアシャンプーエメラルド 400ミリ（しっとり）",
+      "price": "¥3,960",
+      "list_price": "¥4,290",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%82%a8%e3%83%a1%e3%83%a9%e3%83%ab%e3%83%89-%e3%82%b7%e3%83%a3%e3%83%b3%e3%83%97%e3%83%bc",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアシャンプーエメラルド 詰め替え 700ミリ（しっとり）",
+      "price": "¥5,400",
+      "list_price": "¥5,830",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%82%a8%e3%83%a1%e3%83%a9%e3%83%ab%e3%83%89-%e3%82%b7%e3%83%a3%e3%83%b3%e3%83%97%e3%83%bc",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアシャンプー ルビー 400ミリ（サラサラ）",
+      "price": "¥4,000",
+      "list_price": "¥4,290",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%83%ab%e3%83%93%e3%83%bc-%e3%82%b7%e3%83%a3%e3%83%b3%e3%83%97%e3%83%bc",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアシャンプー ルビー詰め替え 700ミリ（サラサラ）",
+      "price": "¥5,400",
+      "list_price": "¥5,830",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%83%ab%e3%83%93%e3%83%bc-%e3%82%b7%e3%83%a3%e3%83%b3%e3%83%97%e3%83%bc",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアトリートメントエメラルド 400ミリ（しっとり）",
+      "price": "¥3,960",
+      "list_price": "¥4,290",
+      "link": "https://ifing-beauty.com/products/amasia",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアトリートメントエメラルド 詰め替え 700ミリ（しっとり）",
+      "price": "¥5,400",
+      "list_price": "¥5,830",
+      "link": "https://ifing-beauty.com/products/amasia",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアトリートメント ルビー 400ミリ（サラサラ）",
+      "price": "¥3,960",
+      "list_price": "¥4,290",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%83%ab%e3%83%93%e3%83%bc-%e3%83%88%e3%83%aa%e3%83%bc%e3%83%88%e3%83%a1%e3%83%b3%e3%83%88",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージアトリートメント ルビー詰め替え 700ミリ（サラサラ）",
+      "price": "¥5,400",
+      "list_price": "¥5,830",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%83%ab%e3%83%93%e3%83%bc-%e3%83%88%e3%83%aa%e3%83%bc%e3%83%88%e3%83%a1%e3%83%b3%e3%83%88",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージア ヘアオイル エメラルド 100ミリ",
+      "price": "¥3,500",
+      "list_price": "¥3,740",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%82%aa%e3%82%a4%e3%83%ab%e3%83%88%e3%83%aa%e3%83%bc%e3%83%88%e3%83%a1%e3%83%b3%e3%83%88-%e3%82%a8%e3%83%a1%e3%83%a9%e3%83%ab%e3%83%89",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "アメージア ヘアオイル ルビー 100ミリ",
+      "price": "¥3,500",
+      "list_price": "¥3,740",
+      "link": "https://ifing-beauty.com/products/amasia-%e3%82%a4%e3%83%b3%e3%83%94%e3%82%bf%e3%83%aa-%e3%82%aa%e3%82%a4%e3%83%ab%e3%83%88%e3%83%aa%e3%83%bc%e3%83%88%e3%83%a1%e3%83%b3%e3%83%88-%e3%83%ab%e3%83%93%e3%83%bc",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa BEAUTECH DRYER SE",
+      "price": "¥29,000",
+      "list_price": "¥33,000",
+      "link": "https://www.mtgec.jp/shop/pages/refa_dryer_series.aspx",
+      "note": "ReFaシリーズは女性へのプレゼント等でも人気になっていますので、自分以外にプレゼントの際にもご活用ください。 ※ReFaシリーズのみ発注に時間がかかる関係で、注文から1週間ほどでのお届けになります。ご了承ください。"
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa BEAUTECH DRYER S+",
+      "price": "¥35,000",
+      "list_price": "¥39,600",
+      "link": "https://www.mtgec.jp/shop/pages/refa_beautech_dryer_s_plus.aspx",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa BEAUTECH DRYER SMART W",
+      "price": "¥36,000",
+      "list_price": "¥40,000",
+      "link": "https://www.refa.net/item/refa_beautech_dryer_s_plus/",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa BEAUTECH RESETTER",
+      "price": "¥34,000",
+      "list_price": "¥38,500",
+      "link": "https://www.refa.net/item/refa_beautech_resetter/",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa CURL IRON PRO＋",
+      "price": "¥26,000",
+      "list_price": "¥29,700",
+      "link": "https://www.refa.net/item/refa_curl_iron_pro_plus/",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa CURL IRON PRO38〜19ミリ",
+      "price": "¥22,000",
+      "list_price": "¥25,000",
+      "link": "https://www.mtgec.jp/shop/pages/refa_curl_iron_pro.aspx",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa POWER STRAIGHT IRON PRO",
+      "price": "¥29,000",
+      "list_price": "¥33,000",
+      "link": "https://www.mtgec.jp/shop/pages/refa_power_straight_iron_pro.aspx",
+      "note": ""
+    },
+    {
+      "use": "ヘアサロン",
+      "name": "ReFa STRAIGHT IRON PRO",
+      "price": "¥20,000",
+      "list_price": "¥23,000",
+      "link": "https://www.mtgec.jp/shop/pages/refa_iron_series.aspx",
+      "note": ""
+    }
+  ],
+  "hair_steps_note": "STEP のメモに {styling} と書くと、選定したスタイリング剤の名前に置き換わる。",
+  "skin_points": {
+    "普通肌": "皮脂と水分のバランスは良好。季節の変わり目の乾燥に注意し、ヒアルロン酸・セラミド・ビタミンC誘導体を意識する。",
+    "乾燥肌": "粉吹き・つっぱり・ひげ剃り後のヒリつきが出やすい。まずクレンジングと洗顔を見直し、アミノ酸系＋セラミド保湿へ切り替える。",
+    "脂性肌": "テカり・毛穴・ニキビが出やすいが、保湿は必須（インナードライ対策）。オイルフリーを選び、糖質脂質・睡眠・喫煙も併せて整える。",
+    "混合肌": "Tゾーンはテカり、Uゾーンは乾燥。部位ごとにケアを変え、朝はTゾーンのみ泡洗顔にする。"
+  },
+  "skincare_cautions": [
+    "パックは毎日不要",
+    "ビタミンC・レチノールは1ヶ月後から",
+    "洗顔は1日2回まで",
+    "肌質は風呂上がり10分で判定"
+  ],
+  "source_note": "スキンケアの手順・使用量・肌タイプ別の商品はnoteの美容ガイドに準拠。価格は福利厚生シート（catalog）。",
+  "skincare_roles_note": "各セット最後の保湿アイテムの role が、夜のルーティン表記（…→ 美容液 → ◯◯）に入る。",
+  "image_note": "image は assets/products/ 配下のファイル名。配布済みカルテから取り出した商品画像を再利用している。画像が無い商品はアイコン表示になる。",
+  "routine_notes": {
+    "morning": "洗顔は4プッシュ以上をよく泡立てて。化粧水は500円玉大を手で温めてから。日焼け止めはパール2粒（日常はSPF30、長時間の外出はSPF50）。",
+    "night": "クレンジングは4プッシュ・90秒以内、30〜34℃のぬるま湯で乳化して流す。化粧水は500円玉大（乾燥肌は2回重ねる）、保湿はパール1粒分。"
+  },
+  "routine_notes_note": "朝夜チェックリストの補足文。noteの美容ガイドの使用量・温度に準拠。",
+  "tasks_note": "購入タスクの文言。アイテムは「おすすめ商品」として紹介し、タスクは購入。buy_note は限定価格のある商品が含まれるときだけ出す。"
+}

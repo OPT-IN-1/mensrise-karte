@@ -1,0 +1,36 @@
+{
+  "id": "karte_v2",
+  "label": "Men's Rise 個人カルテ（実物再現・A4縦5ページ）",
+  "sheets": [
+    {
+      "file": "sheet1.html",
+      "title": "基本情報 & ゴール設定"
+    },
+    {
+      "file": "sheet2.html",
+      "title": "美容部門カルテ"
+    },
+    {
+      "file": "sheet3.html",
+      "title": "筋トレ部門カルテ"
+    },
+    {
+      "file": "sheet4.html",
+      "title": "ヘアスタイルカルテ"
+    },
+    {
+      "file": "sheet5.html",
+      "title": "ルーティン & タスク管理"
+    }
+  ],
+  "assets": [
+    "logo.png",
+    "shared.css"
+  ],
+  "context": "v2",
+  "note": "実際に配布されたカルテ（MS0002/MS0012/MS0013/MS0014）のレイアウトを再現。商品名・価格・購入先はナレッジの方針に従い抽象表現にしている。",
+  "rules": {
+    "phase_section": false,
+    "note": "現行の配布カルテにフェーズ選定セクションは存在しない（実物4本で確認済み）。メニューは常に②。"
+  }
+}

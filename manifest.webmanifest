@@ -1,0 +1,14 @@
+{
+  "name": "Men's Rise 個人カルテ作成ツール",
+  "short_name": "カルテ作成",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAFAFB",
+  "theme_color": "#1A1A1A",
+  "lang": "ja",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"><title>{{sheet_title}}</title><link rel="stylesheet" href="shared.css"></head>
+<body>
+<div class="page" data-sheet="5">
+
+  <div class="head">
+    <div class="logo">
+      <img class="brand" src="logo.png" alt="Men's Rise">
+    </div>
+    <div class="right">
+      <div class="kicker">ROUTINE &amp; TASK KARTE — SHEET 5 / 5</div>
+      <div class="title serif">ルーティン &amp; タスク管理</div>
+      <div class="who">{{mid}}　{{name_display}}　|　{{join_month_text}}</div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <span><span class="k">筋トレ</span><span class="v gold" data-xcheck="phase_freq">{{phase}} × 週{{frequency}}回</span></span>
+    <span><span class="k">美容</span><span class="v">{{skin_type}}ケア</span></span>
+    <span><span class="k">ヘアスタイル</span><span class="v" data-xcheck="hair_target_style">{{hair_target_style}}</span></span>
+    <span><span class="k">育毛期間</span><span class="v gold" data-xcheck="hair_days_label">{{hair_days_label}}</span></span>
+    <span><span class="k">目標体重</span><span class="v" data-xcheck="goal_weight">{{goal_weight}}</span></span>
+  </div>
+
+  <div class="wrap">
+    <div class="main" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; padding:12px 20px 8px">
+      <div>
+        <div class="sec">
+          <div class="sec-h"><span class="no">①</span><span class="t">毎日やること</span><span class="en">DAILY ROUTINE</span></div>
+          <div class="rule"></div>
+          <div class="sub-h">☀️ 朝のルーティン</div>
+          <ul class="chk">
+            {{#daily_morning}}<li><span class="b"></span><span class="tx"><b>{{t}}</b></span><span class="tag">{{tag}}</span></li>{{/daily_morning}}
+          </ul>
+          <div class="sub-h">🌙 夜のルーティン</div>
+          <ul class="chk">
+            {{#daily_night}}<li><span class="b"></span><span class="tx"><b>{{t}}</b></span><span class="tag">{{tag}}</span></li>{{/daily_night}}
+          </ul>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h"><span class="no">②</span><span class="t">週次タスク</span><span class="en">WEEKLY TASK</span></div>
+          <div class="rule"></div>
+          <div class="sub-h">💪 筋トレ {{phase}}（週{{frequency}}回）</div>
+          <ul class="chk">
+            {{#days}}<li><span class="b"></span><span class="tx"><b>{{day_label}}：{{weekday}}曜日 — {{title}}</b></span><span class="tag">筋トレ</span></li>{{/days}}
+            <li><span class="b"></span><span class="tx"><b>体型写真を撮影・記録する（週1回）</b></span><span class="tag">筋トレ</span></li>
+          </ul>
+          <div class="sub-h">✨ 美容（週1回）</div>
+          <ul class="chk">
+            <li><span class="b"></span><span class="tx"><b>爪ケア（爪やすりで整える）</b></span><span class="tag">美容</span></li>
+          </ul>
+          <div class="sub-h">💈 ヘアスタイル</div>
+          <ul class="chk">
+            <li><span class="b"></span><span class="tx"><b data-xcheck="hair_cut_rule">{{hair_cut_rule}}</b></span><span class="tag">ヘア</span></li>
+          </ul>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h"><span class="no">③</span><span class="t">単発タスク（今すぐやること）</span><span class="en">ONE-TIME TASK</span></div>
+          <div class="rule"></div>
+          <ul class="chk">
+            <li class="hi"><span class="b"></span><span class="tx"><b>{{eyebrow_care}}を予約する</b><small>{{eyebrow_guide}}</small></span><span class="tag">美容</span></li>
+            {{#onetime}}<li><span class="b"></span><span class="tx"><b>{{t}}</b></span><span class="tag">{{tag}}</span></li>{{/onetime}}
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec">
+          <div class="sec-h"><span class="no">④</span><span class="t">1週間のルーティンスケジュール</span><span class="en">WEEKLY SCHEDULE</span></div>
+          <div class="rule"></div>
+          <table class="t">
+            <tr><th style="width:44px">時間帯</th>{{#weekdays}}<th class="c">{{.}}</th>{{/weekdays}}</tr>
+            <tr><td>朝</td>{{#week_morning}}<td class="c">{{.}}</td>{{/week_morning}}</tr>
+            <tr><td>筋トレ</td>{{#week_training}}<td class="c {{hi}}">{{v}}</td>{{/week_training}}</tr>
+            <tr><td>夜</td>{{#week_night}}<td class="c">{{.}}</td>{{/week_night}}</tr>
+          </table>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h"><span class="no">⑤</span><span class="t">3ヶ月後の目標（{{deadline_3m}}）</span><span class="en">3-MONTH GOAL</span></div>
+          <div class="rule"></div>
+          <div class="g3">
+            {{#goal3m}}
+            <div class="card"><div class="l">{{icon}} {{title}}</div><div class="v" style="font-size:8.6px">{{#lines}}▸ {{.}}<br>{{/lines}}</div></div>
+            {{/goal3m}}
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h"><span class="no">⑥</span><span class="t">月次進捗トラッカー</span><span class="en">MONTHLY PROGRESS</span></div>
+          <div class="rule"></div>
+          <table class="t fixed">
+            <tr><th style="width:66px">項目</th>{{#progress_months6}}<th class="c">{{label}}</th>{{/progress_months6}}</tr>
+            <tr><td>体重（kg）</td>{{#weight_row6}}<td class="c {{hi}}">{{v}}</td>{{/weight_row6}}</tr>
+            {{#has_body_fat}}<tr><td>体脂肪率（%）</td>{{#bf_row6}}<td class="c {{hi}}">{{v}}</td>{{/bf_row6}}</tr>{{/has_body_fat}}
+            <tr><td>筋トレ頻度</td>{{#freq_row6}}<td class="c {{hi}}">{{v}}</td>{{/freq_row6}}</tr>
+          </table>
+          <div class="note">※ 毎月の進捗フォーム記入後に更新します。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="b">MEN'S RISE PERSONAL KARTE</span>
+    <span>{{mid}}　{{name_display}}　|　{{join_month_text}}</span>
+    <span>Sheet 5 / 5 — ルーティン &amp; タスク管理</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"><title>{{sheet_title}}</title><link rel="stylesheet" href="shared.css"></head>
+<body>
+<div class="page" data-sheet="1">
+
+  <div class="head">
+    <div class="logo">
+      <img class="brand" src="logo.png" alt="Men's Rise">
+    </div>
+    <div class="right">
+      <div class="kicker">PERSONAL KARTE — SHEET 1 / 5</div>
+      <div class="title serif">基本情報 &amp; ゴール設定</div>
+      <div class="who">{{mid}}　{{name_display}}　|　{{join_month_text}}</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="side">
+      <img class="photo" src="{{photo_overview}}" alt="">
+      <h4>PROFILE</h4>
+      <div class="f"><div class="l">氏名 / 呼び名</div><div class="v" data-xcheck="name_display">{{name_display}}</div></div>
+      <div class="f"><div class="l">年齢 / 身長 / 体重</div><div class="v gold" data-xcheck="body_line">{{body_line}}</div></div>
+      <div class="f"><div class="l">入会日</div><div class="v">{{join_month}}</div></div>
+      <div class="f"><div class="l">職業</div><div class="v">{{occupation}}</div></div>
+      <div class="f"><div class="l">入会理由</div><div class="v">{{reason_for_joining}}</div></div>
+      <div class="f"><div class="l">辞めること</div><div class="v">{{things_to_stop}}</div></div>
+      <h4>KARTE STRUCTURE</h4>
+      <ul class="nav">
+        {{#nav}}<li class="{{on}}"><span class="n">{{no}}</span>{{label}}</li>{{/nav}}
+      </ul>
+    </div>
+
+    <div class="main">
+      <div class="sec">
+        <div class="sec-h"><span class="no">①</span><span class="t">定性的ゴール</span><span class="en">QUALITATIVE GOAL</span></div>
+        <div class="rule"></div>
+        <div class="card dark">
+          <div class="l">MEN'S RISE で目指す自分</div>
+          <div class="v serif">{{qualitative_goal}}</div>
+        </div>
+        <table class="t" style="margin-top:6px">
+          <tr><th style="width:88px">場面</th><th>理想の自分のイメージ</th><th style="width:96px">期限</th></tr>
+          {{#roadmap}}
+          <tr class="{{hi}}"><td>{{scene}}</td><td>{{text}}</td><td>{{deadline}}</td></tr>
+          {{/roadmap}}
+        </table>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">②</span><span class="t">定量的ゴール</span><span class="en">QUANTITATIVE GOAL</span></div>
+        <div class="rule"></div>
+        <table class="t">
+          <tr><th style="width:88px">期間</th><th>目標</th><th style="width:96px">期限</th></tr>
+          <tr class="hi"><td>現在</td><td>{{current_body_line}}</td><td>{{join_month}}</td></tr>
+          <tr class="hi"><td>3ヶ月後 ★最重要</td><td>{{goal_body_line}}</td><td>{{deadline_3m}}</td></tr>
+          <tr><td>1日の目安</td><td>目標カロリー {{target_kcal}}（{{goal_direction}}）／たんぱく質 {{protein_g}}g・脂質 {{fat_g}}g・炭水化物 {{carb_g}}g</td><td>毎日</td></tr>
+          <tr><td>トレーニング</td><td>{{menu_heading}}／{{current_location_note}}</td><td>毎週</td></tr>
+          <tr><td>ヘアスタイル</td><td>{{hair_plan}}</td><td>{{hair_target_month}}</td></tr>
+        </table>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">③</span><span class="t">外見イメージング</span><span class="en">VISION</span></div>
+        <div class="rule"></div>
+        <div class="g2">
+          {{#vision}}
+          <div class="card"><div class="l">{{icon}} {{title}}</div><div class="v">{{text}}</div></div>
+          {{/vision}}
+        </div>
+        <div class="card" style="margin-top:6px"><div class="l">🤝 初対面の印象</div><div class="v">{{vision_impression}}</div></div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">④</span><span class="t">成長推移</span><span class="en">MONTHLY PROGRESS</span><span class="note">毎月更新</span></div>
+        <div class="rule"></div>
+        <table class="t fixed">
+          <tr><th style="width:80px">項目</th>{{#progress_months}}<th class="c">{{label}}<div class="note">{{mark}}</div></th>{{/progress_months}}</tr>
+          <tr><td>体重（kg）</td>{{#weight_row}}<td class="c {{hi}}">{{v}}</td>{{/weight_row}}</tr>
+          {{#has_body_fat}}<tr><td>体脂肪率（%）</td>{{#bf_row}}<td class="c {{hi}}">{{v}}</td>{{/bf_row}}</tr>{{/has_body_fat}}
+        </table>
+        <div class="note">※ 毎月の進捗フォームを記入後、このシートに反映します。空欄は未記入です。</div>
+        <div class="sub-h">3ヶ月目標サマリー（各分野）</div>
+        <div class="g2">
+          {{#summary3m}}
+          <div class="card"><div class="l">{{icon}} {{title}}</div><div class="v">{{text}}</div><div class="note">{{freq}}</div></div>
+          {{/summary3m}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="b">MEN'S RISE PERSONAL KARTE</span>
+    <span>{{mid}}　{{name_display}}　|　{{join_month_text}}</span>
+    <span>Sheet 1 / 5 — 基本情報 &amp; ゴール設定</span>
+  </div>
+</div>
+</body>
+</html>

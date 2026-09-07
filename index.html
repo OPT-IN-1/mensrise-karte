@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Men's Rise 個人カルテ作成ツール</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="ui/style.css?v=20260907174035">
+</head>
+<body>
+<header class="app">
+  <span class="brand">MEN'S RISE</span>
+  <span>個人カルテ作成ツール（1回1名）</span>
+  <span class="target" id="targetBox">対象者：未選択</span>
+</header>
+
+<nav class="steps" id="steps">
+  <button data-screen="home" class="active">ホーム</button>
+  <button data-screen="input">1. 受講生を選ぶ</button>
+  <button data-screen="photo">2. 写真</button>
+  <button data-screen="rules">3. 判定の確認</button>
+  <button data-screen="build">4. 生成</button>
+  <button data-screen="qa">5. 検品・納品</button>
+  <button data-screen="audit">監査ログ</button>
+</nav>
+
+<div id="storageWarn" class="gate" style="display:none; margin:12px 20px 0">
+  <b>バックアップの置き場所が決まっていません。</b>
+  このブラウザは、空き容量が減ったときなどにカルテと写真を消すことがあります。
+  <b>書き出し先フォルダを決めておけば、変更のたびに自動で書き出される</b>ので、消えても元に戻せます。
+  <div style="margin-top:8px">
+    <button class="act mini" id="storageWarnGo">書き出し先を決める</button>
+    <button class="act ghost mini" id="storageWarnClose">あとで</button>
+  </div>
+</div>
+<div id="formPhotoWarn" class="gate" style="display:none; margin:12px 20px 0">
+  <b>写真の自動取り込みが、まだ設定されていません。</b>
+  設定すると、<b>「今月分に更新」を押すだけで、その受講生がフォームに送ってきた写真5枚が自動で入ります</b>。
+  1回だけの設定です。
+  <div style="margin-top:8px">
+    <button class="act mini" id="formPhotoWarnGo">いま設定する</button>
+    <button class="act ghost mini" id="formPhotoWarnClose">あとで</button>
+  </div>
+</div>
+<div id="storageOk" class="gate ok" style="display:none; margin:12px 20px 0">
+  <b id="storageOkText"></b>
+  <button class="act ghost mini" id="storageOkClose" style="margin-left:8px">閉じる</button>
+</div>
+<main>
+  <!-- ホーム -->
+  <section class="screen active" id="screen-home">
+    <div class="card">
+      <h2>カルテを作成する</h2>
+      <p class="hint">受講生を選ぶところから始めます。共通設定（カウンセリングデータ・筋トレメニュー・テンプレート）は保存済みのものを使います。</p>
+      <button class="act gold" id="homeCreate">新しいカルテを作成する →</button>
+    </div>
+    <div class="card">
+      <h2>過去に作成したカルテを修正する <span class="small" id="jobsCount"></span></h2>
+      <p class="hint">納品済みのカルテも、制作途中のカルテもここに出ます。開くとその続きから作業できます。</p>
+      <div class="scroll" style="max-height:420px"><table class="grid" id="jobsTable"></table></div>
+    </div>
+  </section>
+
+  <!-- 1. 対象者 -->
+  <section class="screen" id="screen-input">
+    <div class="card" id="settingsCard">
+      <h2>共通設定 <span class="small" id="settingsState"></span></h2>
+      <p class="hint">最初に1回だけ設定します。以降は毎回選ぶ必要はありません。読み込んだ内容はこのブラウザの中だけに保存されます。</p>
+      <label class="row"><span class="lbl">カウンセリングCSV</span>
+        <span class="filepick"><input type="file" id="counselingCsv" accept=".csv,text/csv"></span>
+        <span class="picked" id="counselingCsvLabel">未選択</span>
+      </label>
+      <label class="row"><span class="lbl">サブスク購入者シート</span>
+        <span class="filepick"><input type="file" id="membersCsv" accept=".csv,text/csv"></span>
+        <span class="picked" id="membersCsvLabel">未選択</span>
+      </label>
+      <p class="hint" style="margin-left:178px">購入者シートの「登録日時」を氏名で突き合わせて入会月にします。無い場合は回答日時を使います。</p>
+      <label class="row"><span class="lbl">月次フォームの回答</span>
+        <span class="filepick"><input type="file" id="monthlyCsv" accept=".csv,text/csv"></span>
+        <span class="picked" id="monthlyCsvLabel">未選択</span>
+      </label>
+      <p class="hint" style="margin-left:178px">毎月の「体重・体脂肪率・写真」フォームの回答をCSVで書き出して読み込みます。読み込むと、一覧に<b>フォーム記入済み／未提出</b>が出て、<b>未提出の人は今月分に更新できなくなります</b>。未設定のうちは、これまでどおり手入力で更新できます。</p>
+      <label class="row"><span class="lbl">筋トレメニュー</span>
+        <span class="small" id="menuState">トレーニングプログラム（ツールに同梱）</span>
+      </label>
+      <label class="row"><span class="lbl">テンプレート</span><select id="templateId"></select></label>
+      <p class="hint" style="margin-left:178px">ファイルを選ぶと<b>その場で保存されます</b>。次に開いたときもそのまま使えます。</p>
+      <h3>バックアップ（書き出し・取り込み）</h3>
+      <p class="hint">このブラウザにあるカルテと写真を、1つのファイルにまとめて書き出します。<b>ブラウザの中のデータは消えることがあるので、作業が終わったら押してください。</b>カルテ・写真・カウンセリングCSV・監査ログがすべて入ります。書き出したファイルをドライブに上げておけばバックアップになり、別のパソコンで取り込めば同じ続きから作業できます。</p>
+      <label class="row"><span class="lbl">書き出し先</span>
+        <button class="act ghost mini" id="pickExportDir">フォルダを選ぶ</button>
+        <button class="act ghost mini" id="clearExportDir">解除</button>
+        <span class="picked" id="exportDirLabel">未選択（ダウンロードフォルダに保存されます）</span>
+      </label>
+      <p class="hint" style="margin-left:178px">Googleドライブのパソコン用アプリを入れていれば、そのドライブのフォルダを選べます。選んでおくと、以降は毎回そこへ直接書き出されます。</p>
+      <div class="row">
+        <button class="act" id="runExport">データを書き出す</button>
+        <span class="small" id="exportState"></span>
+      </div>
+      <p class="hint" id="autoBackupState" style="margin-left:178px"></p>
+      <p class="hint" id="storageState" style="margin-left:178px"></p>
+      <label class="row" style="margin-top:8px"><span class="lbl">書き出したファイル</span>
+        <span class="filepick"><input type="file" id="importZip" accept=".zip,application/zip"></span>
+        <span class="picked" id="importZipLabel">未選択</span>
+      </label>
+      <button class="act ghost" id="runImportZip" disabled>このファイルから取り込む</button>
+      <div id="importZipResult" class="small" style="margin-top:8px"></div>
+
+      <h3>フォルダから取り込む</h3>
+      <p class="hint">書き出したファイルを展開してしまった場合や、現行ツールの <b>past_import</b> フォルダから取り込む場合は、こちらでフォルダごと選んでください。中身は上のファイルと同じです。</p>
+      <label class="row"><span class="lbl">フォルダを選ぶ</span>
+        <span class="filepick"><input type="file" id="importFolder" webkitdirectory directory multiple></span>
+        <span class="picked" id="importFolderLabel">未選択</span>
+      </label>
+      <button class="act ghost" id="runImport" disabled>取り込む</button>
+      <div id="importResult" class="small" style="margin-top:8px"></div>
+    </div>
+
+    <details class="card" id="driveCard">
+      <summary><b>Googleドライブとつなぐ（写真の自動取り込み）</b> <span class="small" id="driveState">（未接続）</span></summary>
+      <p class="hint">Googleドライブにつなぐと、作ったカルテと写真がドライブに保存され、<b>別のパソコンからでも同じ続きから作業できます</b>。保存先は、ログインしたアカウントのドライブに作られる専用フォルダ「メンズライズ カルテツール」です。そのフォルダ以外は読み書きしません。</p>
+      <label class="row"><span class="lbl">カルテの保存先フォルダ</span>
+        <input type="text" id="driveParent" class="wide" placeholder="https://drive.google.com/drive/folders/... を貼る">
+        <button class="act ghost mini" id="saveDriveParent">保存</button>
+      </label>
+      <p class="hint" style="margin-left:178px">ドライブでフォルダを開いて、アドレスバーのURLをそのまま貼ってください。この中に「メンズライズ カルテツール」フォルダを作り、カルテと写真をすべてそこへ入れます。<b>パソコンには何も保存されません。</b></p>
+      <label class="row"><span class="lbl">クライアントID</span>
+        <input type="text" id="driveClientId" class="wide" placeholder="000000000000-xxxxxxxx.apps.googleusercontent.com">
+        <button class="act ghost mini" id="saveClientId">保存</button>
+      </label>
+      <p class="hint" style="margin-left:178px">通常は空のままでOKです（このツール専用のIDが最初から入っています）。自前で発行したい場合だけ貼り替えてください。</p>
+      <label class="row"><span class="lbl">月次フォームの写真</span>
+        <span class="picked" id="formFolderLabel">未選択</span>
+        <button class="act ghost mini" id="pickFormFolder" disabled>フォルダを選ぶ</button>
+        <button class="act ghost mini" id="checkFormFolder" disabled>中身を確認</button>
+        <button class="act ghost mini" id="clearFormFolder">解除</button>
+      </label>
+      <div id="formFolderResult" class="small" style="margin-left:178px"></div>
+      <p class="hint" style="margin-left:178px">受講生がフォームに送ってきた写真の置き場所を1回だけ選んでおくと、<b>「今月分に更新」を押したときに、その人の5枚が自動で取り込まれます</b>。先に「ドライブに接続する」を押してください。<br>
+      ドライブの「Men's Rise 月次チェック (File responses)」を選んでください（中の5つのフォルダを選んでもかまいません）。</p>
+      <div class="row">
+        <button class="act" id="driveConnect">ドライブに接続する</button>
+        <button class="act ghost" id="driveSync" disabled>ドライブと同期する</button>
+        <button class="act ghost" id="driveDisconnect" disabled>切断</button>
+        <span class="small" id="driveProgress"></span>
+      </div>
+      <div id="driveResult" class="small" style="margin-top:8px"></div>
+      <details style="margin-top:10px">
+        <summary class="small">接続のしかた（通常は読まなくてOK）</summary>
+        <ol class="hint" style="margin-left:14px">
+          <li><b>「ドライブに接続する」を押す</b>。Googleの画面が出たら、カルテを管理しているアカウントでログインして「許可」</li>
+          <li><b>「カルテの保存先フォルダ」</b>に、カルテを置きたいドライブのフォルダのURLを貼って「保存」</li>
+          <li><b>「月次フォームの写真」で「フォルダを選ぶ」</b>を押し、ドライブの「Men's Rise 月次チェック (File responses)」を選ぶ。これで毎月の写真が自動で入るようになります</li>
+        </ol>
+        <p class="hint" style="margin-left:14px">このツールが求める権限は2つです。<b>書き込みは drive.file</b>（このツールが作ったカルテ・写真だけ）。<b>読み取りは drive.readonly</b>（フォームに送られてきた写真を取り込むために必要）。<b>書き換え・削除ができるのは、このツールが作ったファイルだけ</b>で、ほかのファイルは読むことしかできません。写真の加工はすべてこのパソコンの中で行われ、どこのサーバーにも送られません。</p>
+        <p class="hint" style="margin-left:14px">クライアントIDは発行済みのものが入っています。自前で発行し直す場合は、Google Cloud で「ウェブ アプリケーション」のOAuthクライアントIDを作り、承認済みのJavaScript生成元に <span id="driveOrigin"></span> を登録してから上の欄に貼ってください。</p>
+      </details>
+        </details>
+    <div class="card" id="targetCard">
+      <h2>受講生を選ぶ</h2>
+      <p class="hint">受講生IDまたは氏名を入れてください。カウンセリングの回答から自動で読み込みます。</p>
+      <label class="row"><span class="lbl">受講生ID・氏名・呼び名</span>
+        <input type="text" id="rosterSearch" class="wide" placeholder="例：MS0014 / 松岡優人">
+        <button class="act ghost mini" id="reloadRoster">最新に更新</button>
+      </label>
+      <div class="scroll" style="max-height:260px"><table class="grid" id="rosterTable"></table></div>
+      <div id="candidateState" style="margin-top:10px"></div>
+      <p style="margin-top:8px">
+        <button class="act" id="createJob" disabled>この受講生で作成を開始する</button>
+        <button class="act ghost" id="discardJob">作業を破棄</button></p>
+    </div>
+
+    <div class="card" id="mappingCard" style="display:none">
+      <h2>列マッピング <span class="small">（自動で合っていれば触らなくてOK）</span></h2>
+      <div class="scroll"><table class="grid" id="mappingTable"></table></div>
+      <p style="margin-top:8px"><button class="act ghost" id="saveMapping">マッピングを保存</button></p>
+    </div>
+
+    <div class="card" id="operatorCard" style="display:none">
+      <h2>不足分の入力</h2>
+      <p class="hint">カウンセリングの回答に無かった項目だけ表示しています。入力すると「担当者入力」として記録されます（空欄のままでも進めます）。</p>
+      <div id="operatorFields"></div>
+      <button class="act ghost" id="saveOperator">保存する</button>
+    </div>
+
+    <div class="card" id="manifestCard" style="display:none">
+      <h2>読み込んだ内容の確認</h2>
+      <p class="hint">「原本」はカウンセリング回答そのままの値です。空欄はカルテ上で「特になし」「—」に変換されます。</p>
+      <div id="manifestBody"></div>
+    </div>
+  </section>
+
+  <!-- 2. 写真 -->
+  <section class="screen" id="screen-photo">
+    <div class="card">
+      <h2>写真の用途別確定</h2>
+      <p class="hint">自動割当はしません。用途ごとに、実際の写真を見て1枚ずつ確定してください。写真はこの端末の外に出ません。</p>
+      <div class="roles" id="roleTabs"></div>
+      <div class="two">
+        <div>
+          <label class="row"><span class="lbl">本人の写真</span>
+            <span class="filepick"><input type="file" id="photoInput" accept="image/*" multiple></span>
+            <span class="picked" id="photoInputLabel">未選択</span></label>
+          <div class="thumbs" id="thumbs"></div>
+        </div>
+        <div>
+          <div class="preview" id="cropPreview">写真を選択してください</div>
+          <label class="row"><span class="lbl">回転</span>
+            <select id="cropRotate"><option value="0">0°</option><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></label>
+          <label class="row"><span class="lbl">拡大</span><input type="range" id="cropZoom" min="1" max="3" step="0.05" value="1"><span id="zoomVal">1.00</span></label>
+          <label class="row"><span class="lbl">左右位置</span><input type="range" id="cropX" min="-0.4" max="0.4" step="0.01" value="0"></label>
+          <label class="row"><span class="lbl">上下位置</span><input type="range" id="cropY" min="-0.4" max="0.4" step="0.01" value="0"></label>
+          <div class="note" style="margin:8px 0">写真の最終確認は、出力したカルテの目視確認で行います。</div>
+          <button class="act" id="assignPhoto" disabled>この用途で確定する</button>
+        </div>
+      </div>
+    </div>
+    <div class="card"><h2>確定状況</h2><div id="photoState"></div></div>
+  </section>
+
+  <!-- 3. ルール -->
+  <section class="screen" id="screen-rules">
+    <div class="card">
+      <h2>判定の入力</h2>
+      <label class="row"><span class="lbl">トレーニング系統</span>
+        <select id="programTrack">
+          <option value="weight">ウエイト（ジム）</option>
+          <option value="bodyweight">自重（自宅）</option>
+        </select>
+        <span class="small">既定はジムのウエイト。自宅で自重に切り替える場合だけ変更します。</span>
+      </label>
+      <label class="row"><span class="lbl">ヘア写真から見た長さ</span>
+        <select id="hairLength">
+          <option value="">選択してください</option>
+          <option value="short">ショート</option>
+          <option value="medium_short">ミディアムショート</option>
+          <option value="medium">ミディアム</option>
+          <option value="medium_long_plus">ミディアムロング以上</option>
+        </select>
+      </label>
+      <table class="grid" id="hairGuide" style="max-width:720px; margin:2px 0 12px 178px">
+        <tr><th>選択肢</th><th>横から見たときの目安</th><th>出力される期間</th></tr>
+        <tr><td>ショート</td><td>耳が完全に出ている（サイドが耳の上で終わる）</td><td>150〜180日（約5〜6cm）</td></tr>
+        <tr><td>ミディアムショート</td><td>耳が半分〜大部分隠れる（毛先が耳の中ほど）</td><td>90〜120日（約3〜4cm）</td></tr>
+        <tr><td>ミディアム</td><td>耳が隠れ、毛先が耳下〜あご手前まで</td><td>30〜60日（約1〜2cm）</td></tr>
+        <tr><td>ミディアムロング以上</td><td>毛先があごラインを超えている</td><td>維持（伸ばさない）</td></tr>
+      </table>
+      <p class="hint" style="margin-left:178px">迷ったら短いほうを選んでください（伸ばす期間が長めに出るだけで、実害が出にくい方向です）。</p>
+      <label class="row"><span class="lbl">維持カロリー（任意）</span>
+        <input type="text" id="maintenanceKcal" placeholder="空欄で自動計算">
+        <span class="small">通常は空欄。基礎代謝×活動係数±300kcalで自動計算します。</span>
+      </label>
+      <button class="act" id="applyRules">判定する</button>
+    </div>
+    <div class="card"><h2>確定値（編集不可）</h2><div id="decisionList"></div></div>
+  </section>
+
+  <!-- 4. 生成 -->
+  <section class="screen" id="screen-build">
+    <div class="card">
+      <h2>生成前バリデーション</h2>
+      <button class="act ghost" id="runPrecheck">検査する</button>
+      <div id="precheckResult" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <h2>カルテの生成</h2>
+      <p class="hint">A4縦・Sheet1〜5の順で5ページを組み上げます。PDFは検品画面から、ブラウザの「PDFに保存」で書き出します。納品済みでも、同じ月のカルテを修正・再生成できます。生成後は目視確認と承認をやり直して、PDFを再度書き出してください。</p>
+      <button class="act gold" id="runGenerate" disabled>この1名のカルテを生成する</button>
+      <div id="generateResult" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <!-- 5. QA -->
+  <section class="screen" id="screen-qa">
+    <div class="card">
+      <h2>自動検査の結果</h2>
+      <button class="act ghost mini" id="rerunChecks">検査をやり直す</button>
+      <div id="autoChecks" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <h2>ページの目視確認</h2>
+      <p class="hint">確認者はこの端末の担当者として記録されます：<b id="visualBy"></b></p>
+      <div class="pages" id="pageCards"></div>
+    </div>
+    <div class="card">
+      <h2>最終承認と納品</h2>
+      <div id="gateBox" class="gate"></div>
+      <p class="hint" style="margin-top:10px">承認者はこの端末の担当者として記録されます：<b id="approveBy"></b></p>
+      <button class="act" id="approveBtn">最終承認する</button>
+      <button class="act gold" id="downloadBtn" disabled>PDFにする（印刷）</button>
+      <button class="act" id="nextMemberBtn" style="display:none">次のカルテを作成 →</button>
+      <p class="hint" id="deliveredHint" style="display:none;margin-top:8px">印刷の送信先で「PDFに保存」を選び、<b>MID_氏名.pdf</b> の名前で保存してください。終わったら「次のカルテを作成」を押してください。</p>
+      <h3>修正して作り直す</h3>
+      <p class="hint">カルテの内容がおかしい箇所を直して、その場で出力し直します。原本のカウンセリング回答は書き換えず、修正内容は監査ログに残ります。</p>
+      <label class="row"><span class="lbl">直し方</span>
+        <select id="fixMode">
+          <option value="field">項目を選んで直す</option>
+          <option value="text">カルテの文言を指定して直す</option>
+        </select>
+      </label>
+      <div id="fixFieldBox">
+        <label class="row"><span class="lbl">直す項目</span><select id="fixField" class="wide"></select></label>
+        <label class="row"><span class="lbl">いまの値</span><span class="small" id="fixCurrent">—</span></label>
+      </div>
+      <div id="fixTextBox" style="display:none">
+        <label class="row"><span class="lbl">いまカルテに出ている文言</span>
+          <input type="text" id="fixFind" class="wide" placeholder="例：スパイキーショート（カルテに出ている文字をそのまま）"></label>
+        <p class="hint">項目の一覧に無い箇所（見出し・定型文・提案文など）は、こちらで文言を指定して置き換えます。</p>
+      </div>
+      <textarea id="fixValue" placeholder="修正後の内容を書いてください（空にすると元に戻します）"></textarea>
+      <label class="row"><span class="lbl">修正理由</span><input type="text" id="fixNote" class="wide" placeholder="例：本人の記載が長すぎて読みにくいため要約"></label>
+      <button class="act" id="applyFix">修正して作り直す</button>
+      <div id="fixList" class="small" style="margin-top:10px"></div>
+
+      <h3>修正メモ</h3>
+      <textarea id="correctionNote" placeholder="出力を変えずに記録だけ残したいときに使います"></textarea>
+      <button class="act ghost mini" id="addCorrection">修正履歴に追加</button>
+    </div>
+  </section>
+
+  <!-- 監査 -->
+  <section class="screen" id="screen-audit">
+    <div class="card">
+      <h2>担当者</h2>
+      <p class="hint">検品記録・監査ログに残ります。</p>
+      <label class="row"><span class="lbl">あなたの名前</span><input type="text" id="operatorName" placeholder="例：山田"></label>
+      <button class="act ghost mini" id="saveOperatorName">保存する</button>
+    </div>
+    <div class="card"><h2>監査ログ</h2><button class="act ghost mini" id="loadAudit">再読み込み</button><pre class="log" id="auditLog"></pre></div>
+  </section>
+</main>
+
+<div id="stepbar">
+  <button class="act ghost" id="stepPrev">← 戻る</button>
+  <span id="stepMsg"></span>
+  <button class="act" id="stepNext">次へ →</button>
+</div>
+<div id="toast"></div>
+<iframe id="printFrame"></iframe>
+<script type="module" src="ui/app.js?v=20260907174035"></script>
+</body>
+</html>

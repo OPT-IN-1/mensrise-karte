@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"><title>{{sheet_title}}</title><link rel="stylesheet" href="shared.css"></head>
+<body>
+<div class="page" data-sheet="3">
+
+  <div class="head">
+    <div class="logo">
+      <img class="brand" src="logo.png" alt="Men's Rise">
+    </div>
+    <div class="right">
+      <div class="kicker">TRAINING DEPARTMENT KARTE — SHEET 3 / 5</div>
+      <div class="title serif">筋トレ部門カルテ</div>
+      <div class="who">{{mid}}　{{name_display}}　|　{{join_month_text}}</div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <span><span class="k">体重</span><span class="v" data-xcheck="weight_kg">{{weight_kg}}</span></span>
+    <span><span class="k">目標体重</span><span class="v" data-xcheck="goal_weight">{{goal_weight}}</span></span>
+    <span><span class="k">方針</span><span class="v gold" data-xcheck="goal_policy">{{goal_policy}}</span></span>
+    <span><span class="k">筋トレ経験</span><span class="v">{{current_status}}</span></span>
+    <span><span class="k">選定フェーズ</span><span class="v gold" data-xcheck="phase_freq">{{phase}} × 週{{frequency}}回</span></span>
+    <span><span class="k">場所</span><span class="v">{{current_location}}</span></span>
+  </div>
+
+  <div class="wrap">
+    <div class="side">
+      <h4>基本データ</h4>
+      <div class="box"><div class="l">体重 / 身長 / 年齢</div><div class="v" data-xcheck="body_line3">{{body_line3}}</div></div>
+      <div class="box"><div class="l">目標</div><div class="v">{{goal_summary}}</div></div>
+      <div class="box"><div class="l">現在の運動</div><div class="v">{{current_location}}（{{current_frequency}}）</div></div>
+      <div class="box hi"><div class="l">平日の運動時間</div><div class="v">{{exercise_time_weekday}}</div></div>
+      <div class="box hi"><div class="l">休日の運動時間</div><div class="v">{{exercise_time_holiday}}</div></div>
+      <div class="box"><div class="l">ケガ / 持病</div><div class="v">{{injury_or_condition}}</div></div>
+      <img class="photo tall" src="{{photo_training_front}}" alt="" style="margin-top:6px"><div class="cap">FRONT</div>
+      <img class="photo tall" src="{{photo_training_side}}" alt=""><div class="cap">SIDE</div>
+      <img class="photo tall" src="{{photo_training_back}}" alt=""><div class="cap">BACK</div>
+    </div>
+
+    <div class="main pad-tight">
+      <div class="sec">
+        <div class="sec-h"><span class="no">①</span><span class="t">目標カロリー &amp; PFCバランス</span><span class="en">CALORIE &amp; NUTRITION</span></div>
+        <div class="rule"></div>
+        <div class="g3">
+          <div class="stat"><div class="big" data-xcheck="target_kcal">{{target_kcal}}<small>kcal</small></div><div class="l">1日の目標カロリー</div><div class="sub">{{calorie_basis}}</div></div>
+          <div class="stat plain"><div class="big">{{bmr}}<small>kcal</small></div><div class="l">基礎代謝（BMR）</div><div class="sub">目標 &gt; BMR / 安全</div></div>
+          <div class="stat plain"><div class="big">{{per_meal_kcal}}<small>kcal</small></div><div class="l">1食あたりの目安</div><div class="sub">3食均等分割</div></div>
+        </div>
+        <div style="margin-top:6px">
+          <div class="bar-row"><span class="n">たんぱく質</span><span class="track"><i style="width:{{protein_pct}}%;background:#E04A48"></i></span><span class="kc">{{protein_kcal}} kcal</span></div>
+          <div class="bar-row"><span class="n">脂質</span><span class="track"><i style="width:{{fat_pct}}%;background:#E0A21F"></i></span><span class="kc">{{fat_kcal}} kcal</span></div>
+          <div class="bar-row"><span class="n">炭水化物</span><span class="track"><i style="width:{{carb_pct}}%;background:#2F6FD0"></i></span><span class="kc">{{carb_kcal}} kcal</span></div>
+        </div>
+        <table class="t" style="margin-top:5px">
+          <tr><th style="width:74px">栄養素</th><th style="width:78px">1食あたり</th><th style="width:78px">1日合計</th><th>ポイント</th></tr>
+          <tr><td>たんぱく質</td><td class="num">{{protein_kcal_meal}} kcal</td><td class="num">{{protein_kcal}} kcal</td><td>{{protein_note}}</td></tr>
+          <tr><td>脂質</td><td class="num">{{fat_kcal_meal}} kcal以内</td><td class="num">{{fat_kcal}} kcal以内</td><td>{{fat_note}}</td></tr>
+          <tr><td>炭水化物</td><td class="num">{{carb_kcal_meal}} kcal</td><td class="num">{{carb_kcal}} kcal</td><td>{{carb_note}}</td></tr>
+        </table>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">②</span><span class="t" data-xcheck="menu_heading">{{menu_heading}}</span><span class="en">TRAINING MENU</span><span class="note">{{venue_note}}</span></div>
+        <div class="rule"></div>
+        <div class="days">
+          {{#days}}
+          <div data-day="{{day_label}}">
+            <span class="day-chip">{{day_label}}（{{weekday}}）— {{title}}</span>
+            <div class="day-panel">
+              <span class="fig">{{{figure_svg}}}</span>
+              <span class="lg">{{#legend}}<span><i style="background:{{color}}"></i>{{label}}</span>{{/legend}}</span>
+            </div>
+            <div class="ex">
+              {{#exercises}}
+              <div class="row" style="border-left-color:{{color}};background:{{tint}}"><i style="background:{{color}}"></i><span class="nm">{{name}}</span><span class="rp">{{reps}}</span></div>
+              {{/exercises}}
+            </div>
+          </div>
+          {{/days}}
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">③</span><span class="t">筋トレルーティン チェックリスト</span><span class="en">ROUTINE CHECKLIST</span></div>
+        <div class="rule"></div>
+        <div class="g2">
+          <div>
+            <div class="sub-h">毎日やること</div>
+            <ul class="chk">
+              <li><span class="b"></span><span class="tx"><b>体重を記録する（毎朝）</b><small>起床後・トイレ後・食事前に計測</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>食事を記録する（毎食）</b><small>カロリー・PFCをアプリで記録</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>たんぱく質を毎食{{protein_meal_g}}g摂る</b><small>{{protein_g}}g÷3食。肉・魚・卵・プロテイン等で確保</small></span></li>
+            </ul>
+            <div class="sub-h">週{{frequency}}回やること</div>
+            <ul class="chk">
+              {{#days}}
+              <li><span class="b"></span><span class="tx"><b>{{day_label}}（{{weekday}}）— {{title}}</b><small>{{parts_text}}</small></span></li>
+              {{/days}}
+            </ul>
+          </div>
+          <div>
+            <div class="sub-h">今すぐやること（単発タスク）</div>
+            <ul class="chk">
+              {{#gym_contract}}
+              <li class="hi"><span class="b"></span><span class="tx"><b>ジムに契約する</b><small>器具を使える環境を作る。契約までは下の自重メニューを続ける</small></span></li>
+              {{/gym_contract}}
+              <li class="hi"><span class="b"></span><span class="tx"><b>{{venue}}でのトレーニングを週{{frequency}}回継続する</b><small>{{injury_caution}}</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>カロリー管理アプリを導入する</b><small>毎日の摂取カロリーとPFCを記録する</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>マニュアルの筋トレ動画を視聴する</b><small>各種目のフォームを事前に確認する</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>プロテインを用意する</b><small>1日{{protein_g}}gのたんぱく質確保のために</small></span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">④</span><span class="t">現状の悩み</span><span class="en">CURRENT CONCERNS</span></div>
+        <div class="rule"></div>
+        {{#concerns_training_list}}
+        <div class="concern"><span class="dot"></span><span><b>{{title}}</b><small>{{detail}}</small></span></div>
+        {{/concerns_training_list}}
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="b">MEN'S RISE PERSONAL KARTE</span>
+    <span>{{mid}}　{{name_display}}　|　{{join_month_text}}</span>
+    <span>Sheet 3 / 5 — 筋トレカルテ</span>
+  </div>
+</div>
+</body>
+</html>

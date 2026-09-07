@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"><title>{{sheet_title}}</title><link rel="stylesheet" href="shared.css"></head>
+<body>
+<div class="page" data-sheet="4">
+
+  <div class="head">
+    <div class="logo">
+      <img class="brand" src="logo.png" alt="Men's Rise">
+    </div>
+    <div class="right">
+      <div class="kicker">HAIR STYLE DEPARTMENT KARTE — SHEET 4 / 5</div>
+      <div class="title serif">ヘアスタイルカルテ</div>
+      <div class="who">{{mid}}　{{name_display}}　|　{{join_month_text}}</div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <span><span class="k">顔型</span><span class="v">{{hair_face_shape}}</span></span>
+    <span><span class="k">希望印象</span><span class="v gold">{{hair_desired_impression}}</span></span>
+    <span><span class="k">選定スタイル</span><span class="v">{{hair_target_style}}</span></span>
+    <span><span class="k">育毛期間</span><span class="v gold" data-xcheck="hair_days_label">{{hair_days_label}}</span></span>
+    <span><span class="k">スタイリング頻度</span><span class="v">{{styling_frequency}}</span></span>
+  </div>
+
+  <div class="wrap">
+    <!-- 左カラムに「髪の悩み」欄は置かない（decision_rules.md 5節） -->
+    <div class="side">
+      <img class="photo" src="{{photo_hair}}" alt="">
+      <div class="cap">HAIR</div>
+      <h4>基本データ</h4>
+      <div class="box"><div class="l">顔型</div><div class="v">{{hair_face_shape}}</div>{{#face_figure}}<img class="figure" src="{{face_figure}}" alt="">{{/face_figure}}</div>
+      <div class="box"><div class="l">希望の印象</div><div class="v">{{hair_desired_impression}}</div></div>
+      <div class="box"><div class="l">スタイリング頻度</div><div class="v">{{styling_frequency}}</div></div>
+      <div class="box"><div class="l">カットする場所</div><div class="v">{{hair_cut_place}}</div></div>
+      <h4>① スタイル提案</h4>
+      {{#style_photo}}<img class="photo" src="{{style_photo}}" alt=""><div class="cap">{{hair_target_style}}{{#style_photo_note}}　※{{style_photo_note}}{{/style_photo_note}}</div>{{/style_photo}}
+      <div class="box hi"><div class="l">STYLE PROPOSAL</div>{{#hair_style_label}}<div class="l" style="color:#8A6D1B;font-weight:700">{{hair_style_label}}</div>{{/hair_style_label}}<div class="v" data-xcheck="hair_target_style">{{hair_target_style}}</div>{{#hair_style_point}}<div class="l" style="font-weight:500;margin-top:2px">{{hair_style_point}}</div>{{/hair_style_point}}</div>
+      <div class="box"><div class="l">美容室でのオーダー例</div><div class="v" style="font-weight:500">「{{hair_order_text}}」</div></div>
+      {{#hair_style_alt}}<div class="box"><div class="l">同じタイプの別案</div><div class="v" style="font-weight:600">{{hair_style_alt}}</div></div>{{/hair_style_alt}}
+      {{#hair_style_perm}}<div class="box"><div class="l">パーマを足すなら</div><div class="v" style="font-weight:500">{{hair_style_perm}}</div></div>{{/hair_style_perm}}
+      {{#hair_style_caution}}<div class="box"><div class="l">顔型で気をつけること</div><div class="v" style="font-weight:500">{{hair_style_caution}}</div></div>{{/hair_style_caution}}
+    </div>
+
+    <div class="main pad-tight">
+      <div class="sec">
+        <div class="sec-h"><span class="no">②</span><span class="t">現在の髪の長さ &amp; 育毛スケジュール</span><span class="en">HAIR GROWTH PLAN</span></div>
+        <div class="rule"></div>
+        <div class="g2">
+          <div>
+            <div class="card"><div class="l">現在の髪の長さ（写真より判定）</div><div class="v" style="font-size:12px;font-weight:700;color:#8A6D1B" data-xcheck="hair_length">{{hair_length}}</div></div>
+            <div class="card"><div class="l">目標スタイルに必要な長さ</div><div class="v" style="font-size:12px;font-weight:700;color:#8A6D1B">{{hair_needed_length}}</div></div>
+            <div class="card"><div class="l">必要な伸び</div><div class="v" style="font-size:15px;font-weight:700">{{hair_cm_label}}</div><div class="note">髪は1ヶ月に約1cm伸びる</div></div>
+          </div>
+          <div>
+            <div class="stat" style="text-align:center;padding:12px 10px">
+              <div class="big" style="font-size:32px" data-xcheck="hair_headline">{{hair_headline}}</div>
+              <div class="l" style="font-size:9px;font-weight:700">{{hair_headline_unit}}</div>
+              <div class="sub">{{hair_note}}</div>
+            </div>
+            <div class="note" style="text-align:center">（{{hair_months_label}}）</div>
+            <div class="tl">
+              {{#hair_timeline}}<div class="s {{on}}"><div class="t">{{t}}</div><div class="v">{{v}}</div></div>{{/hair_timeline}}
+            </div>
+            <div class="tip" style="margin-top:5px">{{hair_policy}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">③</span><span class="t">ホームケア必須アイテム</span><span class="en">HOME CARE ITEMS</span><span class="note">おすすめ商品</span></div>
+        <div class="rule"></div>
+        <div class="tip">髪について何も分からない方へのアプローチ：シャンプー・トリートメントで水分バランスを整え、オイルでまとまりをプラス。アイロンでくせを活かしたセットを行う。</div>
+        <div class="items" style="margin-top:5px">
+          {{#hair_items}}
+          <div class="item">{{#image}}<div class="ph"><img src="products/{{image}}" alt=""></div>{{/image}}{{^image}}<div class="ph noimg">画像なし</div>{{/image}}<div class="nm">{{name}}</div>{{#price}}<div class="pr">{{price}}{{#list_price}}<s>{{list_price}}</s>{{/list_price}}</div>{{/price}}{{#badge}}<div class="bdg">{{badge}}</div>{{/badge}}{{#channel}}<div class="ch">{{channel}}</div>{{/channel}}</div>
+          {{/hair_items}}
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">④</span><span class="t">ヘアルーティン（朝・夜）</span><span class="en">DAILY HAIR CARE ROUTINE</span></div>
+        <div class="rule"></div>
+        <div class="tip">「ただ伸ばす」じゃなく「綺麗に育てる」ことが大切。伸ばし途中で傷んでしまうと、パサつき・広がり・毛先のスカスカ感が出て、完成時にかっこよく見えなくなる。毎日のホームケアが仕上がりを左右する。</div>
+        <div class="g2" style="margin-top:5px">
+          <div>
+            <div class="sub-h">☀️ 朝のヘアケア</div>
+            <div class="steps">
+              {{#hair_morning}}<div class="s {{gold}}"><div class="n">STEP {{n}}</div><div class="t">{{t}}</div>{{#note}}<div class="n">{{note}}</div>{{/note}}</div>{{/hair_morning}}
+            </div>
+            <div class="tip">意識すること：寝癖のままセットしない。根元・トップをしっかり濡らして根元の癖をリセットしてから乾かす。</div>
+          </div>
+          <div>
+            <div class="sub-h">🌙 夜のヘアケア</div>
+            <div class="steps">
+              {{#hair_night}}<div class="s {{gold}}"><div class="n">STEP {{n}}</div><div class="t">{{t}}</div>{{#note}}<div class="n">{{note}}</div>{{/note}}</div>{{/hair_night}}
+            </div>
+            <div class="tip">意識すること：シャンプー後は必ずオイルをつけて乾かす。保湿が不十分だとくせ毛が広がりやすくなる。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">⑤</span><span class="t">ヘアスタイルルーティン チェックリスト</span><span class="en">ROUTINE CHECKLIST</span></div>
+        <div class="rule"></div>
+        <div class="g2">
+          <div>
+            <div class="sub-h">毎日やること</div>
+            <ul class="chk">
+              <li><span class="b"></span><span class="tx"><b>朝のヘアセットを実施する</b><small>{{hair_morning_flow}}</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>夜のヘアケアを実施する</b><small>{{hair_night_flow}}</small></span></li>
+            </ul>
+            <div class="sub-h">育毛期間中のルール</div>
+            <ul class="chk">
+              <li><span class="b"></span><span class="tx"><b data-xcheck="hair_cut_rule">{{hair_cut_rule}}</b><small>{{hair_target_month}}まで伸ばし続ける</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>毎月1回、毛先のみ整える</b><small>全体カットはせず、毛先のみ整える</small></span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-h">今すぐやること（単発タスク）</div>
+            <ul class="chk">
+              <li class="hi"><span class="b"></span><span class="tx"><b>{{hair_buy_task}}</b>{{#hair_buy_lines}}<small>🛒 {{t}}</small>{{/hair_buy_lines}}</span></li>
+              {{#hair_tasks}}
+              <li><span class="b"></span><span class="tx"><b>{{t}}</b><small>{{note}}</small></span></li>
+              {{/hair_tasks}}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">⑥</span><span class="t">現状の悩み</span><span class="en">CURRENT CONCERNS</span></div>
+        <div class="rule"></div>
+        {{#concerns_hair_list}}
+        <div class="concern"><span class="dot"></span><span><b>{{title}}</b><small>{{detail}}</small></span></div>
+        {{/concerns_hair_list}}
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="b">MEN'S RISE PERSONAL KARTE</span>
+    <span>{{mid}}　{{name_display}}　|　{{join_month_text}}</span>
+    <span>Sheet 4 / 5 — ヘアスタイルカルテ</span>
+  </div>
+</div>
+</body>
+</html>

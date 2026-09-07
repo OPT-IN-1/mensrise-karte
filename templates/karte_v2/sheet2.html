@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"><title>{{sheet_title}}</title><link rel="stylesheet" href="shared.css"></head>
+<body>
+<div class="page" data-sheet="2">
+
+  <div class="head">
+    <div class="logo">
+      <img class="brand" src="logo.png" alt="Men's Rise">
+    </div>
+    <div class="right">
+      <div class="kicker">BEAUTY DEPARTMENT KARTE — SHEET 2 / 5</div>
+      <div class="title serif">美容部門カルテ</div>
+      <div class="who">{{mid}}　{{name_display}}　|　{{join_month_text}}</div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <span><span class="k">肌タイプ</span><span class="v">{{skin_type}}</span></span>
+    <span><span class="k">眉の形</span><span class="v">{{eyebrow_shape}}</span></span>
+    <span><span class="k">眉の量</span><span class="v">{{eyebrow_amount}}</span></span>
+    <span><span class="k">眉の濃さ</span><span class="v">{{eyebrow_density}}</span></span>
+    <span><span class="k">眉ケア</span><span class="v gold" data-xcheck="eyebrow_care">{{eyebrow_care}}</span></span>
+  </div>
+
+  <div class="wrap">
+    <div class="side">
+      <img class="photo face" src="{{photo_face}}" alt="">
+      <div class="cap">FACE</div>
+      <div class="box"><div class="l">肌タイプ</div><div class="v">{{skin_type}}</div></div>
+      <div class="box"><div class="l">眉の形</div><div class="v">{{eyebrow_shape}}</div></div>
+      <div class="box"><div class="l">眉の量・濃さ</div><div class="v">{{eyebrow_amount}}・{{eyebrow_density}}</div></div>
+      <div class="box hi"><div class="l">眉ケア判定</div><div class="v">→ <span data-xcheck="eyebrow_care">{{eyebrow_care}}</span></div></div>
+      <div class="box hi"><div class="l">スキンケア判定</div><div class="v">→ {{skin_type}}ケア</div></div>
+      <div class="box"><div class="l">現在のスキンケア</div><div class="v">{{current_skincare}}</div></div>
+      <div class="box"><div class="l">施術ルーティン</div><div class="v">{{procedure_routine}}</div></div>
+    </div>
+
+    <div class="main pad-tight">
+      <div class="sec">
+        <div class="sec-h"><span class="no">①</span><span class="t">眉ケア</span><span class="en">EYEBROW CARE</span></div>
+        <div class="rule"></div>
+        <div class="pick">
+          <div class="col {{artmake_class}}">
+            <span class="badge">{{artmake_badge}}</span>
+            <h5>アートメイクで眉を作る</h5>
+            <p>{{artmake_reason}}</p>
+            <div class="meta">対象：眉が薄い・少ない・形が整っていない方<br>特典：Men's Rise特典あり（東京・大阪・福岡）</div>
+            <div class="cta">{{artmake_cta}}</div>
+          </div>
+          <div class="col {{salon_class}}">
+            <span class="badge">{{salon_badge}}</span>
+            <h5>眉毛サロンで形を作る</h5>
+            <p>{{salon_reason}}</p>
+            <div class="meta">対象：眉が多い・濃い・硬い方<br>特典：初回無料／2〜6回目 10%OFF</div>
+            <div class="cta">{{salon_cta}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">②</span><span class="t">スキンケア（{{skin_type}}）</span><span class="en">SKIN CARE</span><span class="note">おすすめ商品</span></div>
+        <div class="rule"></div>
+        <div class="tip">{{skin_point}}</div>
+        <div class="items five" style="margin-top:5px">
+          {{#skincare_items}}
+          <div class="item">{{#image}}<div class="ph"><img src="products/{{image}}" alt=""></div>{{/image}}{{^image}}<div class="ph noimg">画像なし</div>{{/image}}<div class="nm">{{name}}</div>{{#price}}<div class="pr">{{price}}{{#list_price}}<s>{{list_price}}</s>{{/list_price}}</div>{{/price}}{{#badge}}<div class="bdg">{{badge}}</div>{{/badge}}{{#channel}}<div class="ch">{{channel}}</div>{{/channel}}</div>
+          {{/skincare_items}}
+        </div>
+        {{#skincare_cautions_text}}
+        <div class="note" style="margin-top:4px">気をつけること：・{{skincare_cautions_text}}</div>
+        {{/skincare_cautions_text}}
+      </div>
+
+      <div class="g3">
+        <div class="sec">
+          <div class="sec-h"><span class="no">③</span><span class="t">ニキビ対策</span></div>
+          <div class="rule"></div>
+          <div class="card"><div class="v">{{acne_notice}}</div></div>
+        </div>
+        <div class="sec">
+          <div class="sec-h"><span class="no">④</span><span class="t">日焼け止め</span></div>
+          <div class="rule"></div>
+          <div class="card"><div class="v">毎朝スキンケアの最後に必ず塗る。紫外線は肌老化・シミの最大原因。</div>
+            <div class="prod">{{#sunscreen_item.image}}<img src="products/{{sunscreen_item.image}}" alt="">{{/sunscreen_item.image}}{{^sunscreen_item.image}}<span class="noimg-sm">画像なし</span>{{/sunscreen_item.image}}<span><b>{{sunscreen_item.name}}</b><small>{{sunscreen_item.channel}}{{sunscreen_item.price}}</small></span></div></div>
+        </div>
+        <div class="sec">
+          <div class="sec-h"><span class="no">⑤</span><span class="t">爪ケア（週1回）</span></div>
+          <div class="rule"></div>
+          <div class="card"><div class="v">爪の長さと形を整えるだけで清潔感が大幅アップ。</div>
+            <div class="prod">{{#nail_item.image}}<img src="products/{{nail_item.image}}" alt="">{{/nail_item.image}}{{^nail_item.image}}<span class="noimg-sm">画像なし</span>{{/nail_item.image}}<span><b>{{nail_item.name}}</b><small>{{nail_item.channel}}{{nail_item.price}}</small></span></div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">⑥</span><span class="t">美容ルーティン チェックリスト</span><span class="en">ROUTINE CHECKLIST</span></div>
+        <div class="rule"></div>
+        <div class="g2">
+          <div>
+            <div class="sub-h">毎日やること</div>
+            <ul class="chk">
+              <li><span class="b"></span><span class="tx"><b>朝：{{morning_routine}}</b><small>{{morning_note}}</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>夜：{{night_routine}}</b><small>{{night_note}}</small></span></li>
+            </ul>
+            <div class="sub-h">週1回やること</div>
+            <ul class="chk">
+              <li><span class="b"></span><span class="tx"><b>爪ケア</b><small>決まった曜日に実施（例：土曜日）</small></span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="sub-h">今すぐやること（単発タスク）</div>
+            <ul class="chk">
+              <li class="hi"><span class="b"></span><span class="tx"><b>{{eyebrow_care}}を予約する</b><small>{{eyebrow_guide}}</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>{{skincare_buy_task}}</b>{{#skincare_buy_lines}}<small>🛒 {{t}}</small>{{/skincare_buy_lines}}</span></li>
+              <li><span class="b"></span><span class="tx"><b>{{sunscreen_task}}</b><small>{{sunscreen_item.name}}／毎朝の使用を習慣にする</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>{{nail_task}}</b><small>{{nail_item.name}}／週1回のケアに使う</small></span></li>
+              <li><span class="b"></span><span class="tx"><b>マニュアルの美容コンテンツを視聴する</b><small>スキンケア・日焼け止め・爪ケアの手順を確認</small></span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><span class="no">⑦</span><span class="t">現状の悩み</span><span class="en">CURRENT CONCERNS</span></div>
+        <div class="rule"></div>
+        {{#concerns_beauty_list}}
+        <div class="concern"><span class="dot"></span><span><b>{{title}}</b><small>{{detail}}</small></span></div>
+        {{/concerns_beauty_list}}
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="b">MEN'S RISE PERSONAL KARTE</span>
+    <span>{{mid}}　{{name_display}}　|　{{join_month_text}}</span>
+    <span>Sheet 2 / 5 — 美容カルテ</span>
+  </div>
+</div>
+</body>
+</html>

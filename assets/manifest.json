@@ -1,0 +1,53 @@
+{
+ "products": [
+  "arimino-men-hard-balm.jpg",
+  "crates-elemea-f.jpg",
+  "curel-sebum-gel.jpg",
+  "gue-cleansing-oil.jpg",
+  "gue-compression-liquid.jpg",
+  "gue-face-soap.jpg",
+  "holistic-cures-dryer.jpg",
+  "kanavi-glass-nail-file.jpg",
+  "lebel-trie-spray-10.jpg",
+  "minon-amino-lotion.jpg",
+  "n-homme-gel-balm.jpg",
+  "n-shea-oil.jpg",
+  "n-shea-shampoo.jpg",
+  "n-shea-treatment.jpg",
+  "oudoumuge-lotion.jpg",
+  "skin1004-uv-cream.jpg",
+  "tout-vert-nano-emulsion.jpg",
+  "trube-glossy-serum.jpg"
+ ],
+ "hairstyles": [
+  "01-round-mash.png",
+  "02-spiky-short.png",
+  "03-sheer-mash.jpg",
+  "04-center-part.png",
+  "05-short-mash.jpg",
+  "06-up-bang.png",
+  "07-comma-feather.jpg",
+  "08-sheer-mash-maru.png",
+  "09-wolf-mash.png",
+  "10-ear-hook-center.png",
+  "11-wave-center.jpg",
+  "12-up-bang-short.jpg",
+  "cp-base-cool.png",
+  "cp-base-cute.png",
+  "cp-gyaku-cool.png",
+  "cp-gyaku-cute.png",
+  "cp-marugao-cool.png",
+  "cp-marugao-cute.png",
+  "cp-omenaga-cool.png",
+  "cp-omenaga-cute.png",
+  "cp-tamago-cool.png",
+  "cp-tamago-cute.png"
+ ],
+ "faceshapes": [
+  "base.png",
+  "gyaku-sankaku.png",
+  "marugata.png",
+  "omenagata.png",
+  "tamagogata.png"
+ ]
+}
