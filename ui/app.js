@@ -1,25 +1,25 @@
 // 画面の組み立てと進行。現行ツール（static/app.js）と同じ画面・同じ手順で動く。
 // 違うのはサーバーに投げずに、すべてこのブラウザの中で処理する点だけ。
 
-import * as store from './store.js?v=20260908011822';
-import * as photosLib from './photos.js?v=20260908011822';
-import * as drive from './drive.js?v=20260908011822';
-import * as formphotos from './formphotos.js?v=20260908011822';
-import { CLIENT_ID, API_KEY } from './config.js?v=20260908011822';
-import * as sync from './sync.js?v=20260908011822';
-import { makeZip, readZip } from './zip.js?v=20260908011822';
-import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260908011822';
-import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260908011822';
-import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260908011822';
-import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260908011822';
-import * as rules from '../app/rules.js?v=20260908011822';
-import * as monthly from '../app/monthly.js?v=20260908011822';
-import { parseMenu } from '../app/menu.js?v=20260908011822';
-import { buildContext } from '../app/context.js?v=20260908011822';
-import * as validate from '../app/validate.js?v=20260908011822';
-import * as submissions from '../app/submissions.js?v=20260908011822';
-import { normalize } from '../app/text.js?v=20260908011822';
-import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260908011822';
+import * as store from './store.js?v=20260908145508';
+import * as photosLib from './photos.js?v=20260908145508';
+import * as drive from './drive.js?v=20260908145508';
+import * as formphotos from './formphotos.js?v=20260908145508';
+import { CLIENT_ID, API_KEY } from './config.js?v=20260908145508';
+import * as sync from './sync.js?v=20260908145508';
+import { makeZip, readZip } from './zip.js?v=20260908145508';
+import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260908145508';
+import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260908145508';
+import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260908145508';
+import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260908145508';
+import * as rules from '../app/rules.js?v=20260908145508';
+import * as monthly from '../app/monthly.js?v=20260908145508';
+import { parseMenu } from '../app/menu.js?v=20260908145508';
+import { buildContext } from '../app/context.js?v=20260908145508';
+import * as validate from '../app/validate.js?v=20260908145508';
+import * as submissions from '../app/submissions.js?v=20260908145508';
+import { normalize } from '../app/text.js?v=20260908145508';
+import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260908145508';
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g,

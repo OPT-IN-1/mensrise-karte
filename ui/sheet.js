@@ -2,7 +2,7 @@
 // 現行ツールがPlaywrightの中でやっていた「本文の自動リサイズ」をそのまま持ってきている。
 // PDFはブラウザの印刷（⌘P →「PDFに保存」）で作る。
 
-import { render, applyTextCorrections } from '../app/template.js?v=20260908011822';
+import { render, applyTextCorrections } from '../app/template.js?v=20260908145508';
 
 export const PAGE_WIDTH = 794;    // A4縦 96dpi
 export const PAGE_HEIGHT = 1123;

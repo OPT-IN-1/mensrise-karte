@@ -1,11 +1,11 @@
 // カルテ5枚に差し込む値をすべて組み立てる。
 // 判定結果（rules.js）と本人の回答（manifest）から、テンプレートの190項目を作る。
 
-import * as plan from './plan.js?v=20260908011822';
-import * as fig from './figure.js?v=20260908011822';
-import * as menuMod from './menu.js?v=20260908011822';
-import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260908011822';
-import { meaningful } from './text.js?v=20260908011822';
+import * as plan from './plan.js?v=20260908145508';
+import * as fig from './figure.js?v=20260908145508';
+import * as menuMod from './menu.js?v=20260908145508';
+import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260908145508';
+import { meaningful } from './text.js?v=20260908145508';
 
 const NAV_ITEMS = [
   ['1', '基本情報 & ゴール設定'], ['2', '美容カルテ'], ['3', '筋トレカルテ'],
@@ -30,7 +30,9 @@ const DOMAIN_WORDS = {
   hair: ['髪', 'ヘア', '美容室', '美容院', '髪型', 'スタイリング', 'パーマ', 'カット', '白髪'],
   meal: ['食事', 'カロリー', 'PFC', 'たんぱく質', 'タンパク質', '糖質', '自炊', '間食', '飲酒', 'お酒', '食生活'],
 };
-const CLAUSE_SPLIT = /[。\n／/]+/;
+// 「、」区切りだけの箇条書き（例「体脂肪率10%、TOEIC800点、スタクラ生徒3人」）も
+// 1件ずつに分ける。分けないと、分野に関係ない内容まで丸ごと入ってしまう。
+const CLAUSE_SPLIT = /[。、，,\n／/]+|[\s　]+/;
 const WEIGHT_GOAL_RE = /体重\s*(?:を)?\s*(\d{2,3}(?:\.\d)?)\s*(?:kg|キロ|㎏)/;
 const BODYFAT_GOAL_RE = /体脂肪率?\s*(?:を)?\s*(\d{1,2}(?:\.\d)?)\s*[%％]|体脂肪率?\s*(?:を)?\s*(\d{1,2})\s*パーセント/;
 const ROADMAP_HORIZONS = [['roadmap_1m', '1ヶ月後'], ['roadmap_3m', '3ヶ月後'], ['roadmap_6m', '半年後'], ['roadmap_1y', '1年後']];

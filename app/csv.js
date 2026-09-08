@@ -2,8 +2,8 @@
 // CSVの見出しは運用で変わりうるため、別名辞書で自動マッピングし、画面で確定させる。
 // 確定したマッピングは、見出しの署名ごとに保存して次回から使い回す。
 
-import { FIELDS, BY_KEY } from './fields.js?v=20260908011822';
-import { normalize, stripReading } from './text.js?v=20260908011822';
+import { FIELDS, BY_KEY } from './fields.js?v=20260908145508';
+import { normalize, stripReading } from './text.js?v=20260908145508';
 
 /** RFC4180のCSVを行列に分解する（引用符の中の改行・カンマも正しく読む）。 */
 export function parseCsv(text) {
