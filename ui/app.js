@@ -1,25 +1,25 @@
 // 画面の組み立てと進行。現行ツール（static/app.js）と同じ画面・同じ手順で動く。
 // 違うのはサーバーに投げずに、すべてこのブラウザの中で処理する点だけ。
 
-import * as store from './store.js?v=20260908145508';
-import * as photosLib from './photos.js?v=20260908145508';
-import * as drive from './drive.js?v=20260908145508';
-import * as formphotos from './formphotos.js?v=20260908145508';
-import { CLIENT_ID, API_KEY } from './config.js?v=20260908145508';
-import * as sync from './sync.js?v=20260908145508';
-import { makeZip, readZip } from './zip.js?v=20260908145508';
-import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260908145508';
-import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260908145508';
-import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260908145508';
-import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260908145508';
-import * as rules from '../app/rules.js?v=20260908145508';
-import * as monthly from '../app/monthly.js?v=20260908145508';
-import { parseMenu } from '../app/menu.js?v=20260908145508';
-import { buildContext } from '../app/context.js?v=20260908145508';
-import * as validate from '../app/validate.js?v=20260908145508';
-import * as submissions from '../app/submissions.js?v=20260908145508';
-import { normalize } from '../app/text.js?v=20260908145508';
-import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260908145508';
+import * as store from './store.js?v=20260909124943';
+import * as photosLib from './photos.js?v=20260909124943';
+import * as drive from './drive.js?v=20260909124943';
+import * as formphotos from './formphotos.js?v=20260909124943';
+import { CLIENT_ID, API_KEY } from './config.js?v=20260909124943';
+import * as sync from './sync.js?v=20260909124943';
+import { makeZip, readZip } from './zip.js?v=20260909124943';
+import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260909124943';
+import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260909124943';
+import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260909124943';
+import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260909124943';
+import * as rules from '../app/rules.js?v=20260909124943';
+import * as monthly from '../app/monthly.js?v=20260909124943';
+import { parseMenu } from '../app/menu.js?v=20260909124943';
+import { buildContext } from '../app/context.js?v=20260909124943';
+import * as validate from '../app/validate.js?v=20260909124943';
+import * as submissions from '../app/submissions.js?v=20260909124943';
+import { normalize } from '../app/text.js?v=20260909124943';
+import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260909124943';
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g,
@@ -1514,7 +1514,7 @@ async function generate(minScale) {
   checks.body = { result: bodyIssues.some((i) => i.level === 'ERROR') ? '不合格' : '合格', issues: bodyIssues, at: nowText() };
 
   job.generation.built_at = nowText();
-  job.generation.pdf_name = `${job.mid}_${job.name}.pdf`;
+  job.generation.pdf_name = `${karteBaseName(job, manifest)}.pdf`;
   job.generation.scales = metrics.map((m) => (m ? m.scale : null));
   job.generation.needs_redelivery = hasCurrentDelivery(job);
   job.regenerate_count = Number(job.regenerate_count || 0) + 1;
@@ -1524,6 +1524,27 @@ async function generate(minScale) {
   await saveJob();
   await audit('generated', { round, scales: job.generation.scales, errors: checkErrors(job).length });
   return job;
+}
+
+/**
+ * 保存するファイル名を、全員同じ形にそろえて返す。
+ *   例：MS0030_井上颯人_2026-07
+ * 氏名の空白と、読み仮名の丸カッコは落とす（人によって付いたり付かなかったりするため）。
+ * ブラウザの「PDFに保存」は、この名前をそのまま初期値として出す。
+ */
+function karteBaseName(job, manifest = null) {
+  const name = String(job.name || '')
+    .replace(/[（(][^）)]*[）)]/g, '')
+    .replace(/[\s\u3000]+/g, '')
+    .trim();
+  let month = String(job.current_month || '').trim();
+  if (!month) {
+    // 初回は対象月を持たないので、入会月（例「2026年7月」）を 2026-07 の形にして使う
+    const joinMonth = String(((manifest || {}).member || {}).join_month || '');
+    const found = joinMonth.match(/(\d{4})\s*年\s*(\d{1,2})\s*月/);
+    if (found) month = `${found[1]}-${String(found[2]).padStart(2, '0')}`;
+  }
+  return [job.mid, name || '氏名なし', month].filter(Boolean).join('_');
 }
 
 /**
@@ -1569,7 +1590,7 @@ function measureSheets(sheets, minScale) {
       S.printedFor = S.job ? `${S.job.mid}#${S.job.round || 1}#${S.job.regenerate_count || 0}` : '';
       resolve(out);
     };
-    frame.srcdoc = printableDocument(sheets, S.data.cssCache);
+    frame.srcdoc = printableDocument(sheets, S.data.cssCache, S.job ? karteBaseName(S.job, S.manifest) : 'カルテ');
   });
 }
 
@@ -1885,7 +1906,7 @@ $('downloadBtn').onclick = async () => {
   $('printFrame').contentWindow.focus();
   $('printFrame').contentWindow.print();
   renderStepBar();
-  toast(`送信先で「PDFに保存」を選び、${S.job.generation.pdf_name} の名前で保存してください`);
+  toast(`送信先で「PDFに保存」を選んでください。ファイル名は ${S.job.generation.pdf_name} が入ります`);
 };
 
 async function startNextMember() {

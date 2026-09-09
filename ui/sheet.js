@@ -2,7 +2,7 @@
 // 現行ツールがPlaywrightの中でやっていた「本文の自動リサイズ」をそのまま持ってきている。
 // PDFはブラウザの印刷（⌘P →「PDFに保存」）で作る。
 
-import { render, applyTextCorrections } from '../app/template.js?v=20260908145508';
+import { render, applyTextCorrections } from '../app/template.js?v=20260909124943';
 
 export const PAGE_WIDTH = 794;    // A4縦 96dpi
 export const PAGE_HEIGHT = 1123;
@@ -83,13 +83,13 @@ export function fitPage(doc, minScale = 0.80) {
 }
 
 /** 5枚を1つの印刷用ドキュメントにまとめる。⌘Pで5ページのPDFになる。 */
-export function printableDocument(sheets, css) {
+export function printableDocument(sheets, css, title = 'カルテ') {
   const pages = sheets.map(({ html }) => {
     const body = html.replace(/[\s\S]*?<body[^>]*>/i, '').replace(/<\/body>[\s\S]*/i, '');
     return `<section class="sheet">${body}</section>`;
   }).join('\n');
   return `<!doctype html><html lang="ja"><head><meta charset="utf-8">
-<title>カルテ</title>
+<title>${title}</title>
 <style>${css}
   @page { size: A4 portrait; margin: 0; }
   html, body { margin: 0; padding: 0; background: #f3f4f6; }

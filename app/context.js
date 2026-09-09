@@ -1,11 +1,11 @@
 // カルテ5枚に差し込む値をすべて組み立てる。
 // 判定結果（rules.js）と本人の回答（manifest）から、テンプレートの190項目を作る。
 
-import * as plan from './plan.js?v=20260908145508';
-import * as fig from './figure.js?v=20260908145508';
-import * as menuMod from './menu.js?v=20260908145508';
-import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260908145508';
-import { meaningful } from './text.js?v=20260908145508';
+import * as plan from './plan.js?v=20260909124943';
+import * as fig from './figure.js?v=20260909124943';
+import * as menuMod from './menu.js?v=20260909124943';
+import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260909124943';
+import { meaningful } from './text.js?v=20260909124943';
 
 const NAV_ITEMS = [
   ['1', '基本情報 & ゴール設定'], ['2', '美容カルテ'], ['3', '筋トレカルテ'],

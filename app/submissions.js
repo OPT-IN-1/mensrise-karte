@@ -5,8 +5,8 @@
 // 提出があるまで月次更新を始められないようにするため、
 // 画面の一覧はここが返す状態を見て「フォーム記入済み／未提出」を出す。
 
-import { parseCsv } from './csv.js?v=20260908145508';
-import { normalize, stripReading } from './text.js?v=20260908145508';
+import { parseCsv } from './csv.js?v=20260909124943';
+import { normalize, stripReading } from './text.js?v=20260909124943';
 
 const MID_HEADERS = ['受講生id', '受講生ID', 'mid', '会員id'];
 const NAME_HEADERS = ['氏名', 'お名前', '名前'];

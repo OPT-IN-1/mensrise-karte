@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="assets/icon-192.png">
-<link rel="stylesheet" href="ui/style.css?v=20260908145508">
+<link rel="stylesheet" href="ui/style.css?v=20260909124943">
 </head>
 <body>
 <header class="app">
@@ -291,7 +291,7 @@
       <button class="act" id="approveBtn">最終承認する</button>
       <button class="act gold" id="downloadBtn" disabled>PDFにする（印刷）</button>
       <button class="act" id="nextMemberBtn" style="display:none">次のカルテを作成 →</button>
-      <p class="hint" id="deliveredHint" style="display:none;margin-top:8px">印刷の送信先で「PDFに保存」を選び、<b>MID_氏名.pdf</b> の名前で保存してください。終わったら「次のカルテを作成」を押してください。</p>
+      <p class="hint" id="deliveredHint" style="display:none;margin-top:8px">印刷の送信先で「PDFに保存」を選んでください。ファイル名は <b>受講生ID_氏名_対象月.pdf</b> の形で自動的に入ります（全員同じ形式です）。終わったら「次のカルテを作成」を押してください。</p>
       <h3>修正して作り直す</h3>
       <p class="hint">カルテの内容がおかしい箇所を直して、その場で出力し直します。原本のカウンセリング回答は書き換えず、修正内容は監査ログに残ります。</p>
       <label class="row"><span class="lbl">直し方</span>
@@ -373,7 +373,7 @@
     document.body.classList.remove('locked');
     var tag = document.createElement('script');
     tag.type = 'module';
-    tag.src = 'ui/app.js?v=20260908145508';
+    tag.src = 'ui/app.js?v=20260909124943';
     document.body.appendChild(tag);
   }
 

@@ -7,7 +7,7 @@
 //   ・筋トレのPhase  … 開始から3ヶ月ごとに1段階上げる（Phase 3で打ち止め）
 //   ・そのほかの提案 … 目標スタイル・スキンケア・眉は初回のまま据え置く
 
-import * as plan from './plan.js?v=20260908145508';
+import * as plan from './plan.js?v=20260909124943';
 
 export const PHASE_MONTHS = 3;   // 何ヶ月継続したらPhaseを1つ上げるか
 export const PHASE_MAX = 3;
