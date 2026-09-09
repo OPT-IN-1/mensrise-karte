@@ -10,9 +10,9 @@
 // いずれも「目視検査の代替ではない」。ERRORが0件でも、ページの目視確認と
 // 最終承認が済むまで納品させない。
 
-import { PHOTO_ROLES } from './fields.js?v=20260909124943';
-import { missingRequired } from './manifest.js?v=20260909124943';
-import { normalize } from './text.js?v=20260909124943';
+import { PHOTO_ROLES } from './fields.js?v=20260909131224';
+import { missingRequired } from './manifest.js?v=20260909131224';
+import { normalize } from './text.js?v=20260909131224';
 
 const MEASURE_RE = /(\d+(?:\.\d+)?)\s*(kcal|kg|cm|%|歳|g)/gi;
 const HAIR_RANGE_RE = /(?<!\d)\d+\s*〜\s*\d+\s*日/g;

@@ -1,25 +1,25 @@
 // 画面の組み立てと進行。現行ツール（static/app.js）と同じ画面・同じ手順で動く。
 // 違うのはサーバーに投げずに、すべてこのブラウザの中で処理する点だけ。
 
-import * as store from './store.js?v=20260909124943';
-import * as photosLib from './photos.js?v=20260909124943';
-import * as drive from './drive.js?v=20260909124943';
-import * as formphotos from './formphotos.js?v=20260909124943';
-import { CLIENT_ID, API_KEY } from './config.js?v=20260909124943';
-import * as sync from './sync.js?v=20260909124943';
-import { makeZip, readZip } from './zip.js?v=20260909124943';
-import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260909124943';
-import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260909124943';
-import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260909124943';
-import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260909124943';
-import * as rules from '../app/rules.js?v=20260909124943';
-import * as monthly from '../app/monthly.js?v=20260909124943';
-import { parseMenu } from '../app/menu.js?v=20260909124943';
-import { buildContext } from '../app/context.js?v=20260909124943';
-import * as validate from '../app/validate.js?v=20260909124943';
-import * as submissions from '../app/submissions.js?v=20260909124943';
-import { normalize } from '../app/text.js?v=20260909124943';
-import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260909124943';
+import * as store from './store.js?v=20260909131224';
+import * as photosLib from './photos.js?v=20260909131224';
+import * as drive from './drive.js?v=20260909131224';
+import * as formphotos from './formphotos.js?v=20260909131224';
+import { CLIENT_ID, API_KEY } from './config.js?v=20260909131224';
+import * as sync from './sync.js?v=20260909131224';
+import { makeZip, readZip } from './zip.js?v=20260909131224';
+import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260909131224';
+import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260909131224';
+import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260909131224';
+import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260909131224';
+import * as rules from '../app/rules.js?v=20260909131224';
+import * as monthly from '../app/monthly.js?v=20260909131224';
+import { parseMenu } from '../app/menu.js?v=20260909131224';
+import { buildContext } from '../app/context.js?v=20260909131224';
+import * as validate from '../app/validate.js?v=20260909131224';
+import * as submissions from '../app/submissions.js?v=20260909131224';
+import { normalize } from '../app/text.js?v=20260909131224';
+import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260909131224';
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g,
@@ -1903,6 +1903,19 @@ $('downloadBtn').onclick = async () => {
   await saveJob();
   await audit('delivered', { round: S.job.round, name: S.job.generation.pdf_name });
   S.downloaded = true;
+
+  // 「PDFに保存」の初期ファイル名は、このタブのタイトルがそのまま使われる。
+  // 印刷のあいだだけカルテの名前にして、終わったら元に戻す。
+  const pageTitle = document.title;
+  const restoreTitle = () => {
+    document.title = pageTitle;
+    window.removeEventListener('afterprint', restoreTitle);
+  };
+  document.title = karteBaseName(S.job, S.manifest);
+  window.addEventListener('afterprint', restoreTitle);
+  setTimeout(restoreTitle, 120000);   // 印刷画面を閉じずに放置された場合の保険
+  await new Promise((done) => setTimeout(done, 50));   // タイトルの反映を待つ
+
   $('printFrame').contentWindow.focus();
   $('printFrame').contentWindow.print();
   renderStepBar();
