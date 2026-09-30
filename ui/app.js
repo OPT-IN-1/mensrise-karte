@@ -1,25 +1,26 @@
 // 画面の組み立てと進行。現行ツール（static/app.js）と同じ画面・同じ手順で動く。
 // 違うのはサーバーに投げずに、すべてこのブラウザの中で処理する点だけ。
 
-import * as store from './store.js?v=20260909131224';
-import * as photosLib from './photos.js?v=20260909131224';
-import * as drive from './drive.js?v=20260909131224';
-import * as formphotos from './formphotos.js?v=20260909131224';
-import { CLIENT_ID, API_KEY } from './config.js?v=20260909131224';
-import * as sync from './sync.js?v=20260909131224';
-import { makeZip, readZip } from './zip.js?v=20260909131224';
-import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260909131224';
-import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260909131224';
-import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260909131224';
-import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260909131224';
-import * as rules from '../app/rules.js?v=20260909131224';
-import * as monthly from '../app/monthly.js?v=20260909131224';
-import { parseMenu } from '../app/menu.js?v=20260909131224';
-import { buildContext } from '../app/context.js?v=20260909131224';
-import * as validate from '../app/validate.js?v=20260909131224';
-import * as submissions from '../app/submissions.js?v=20260909131224';
-import { normalize } from '../app/text.js?v=20260909131224';
-import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260909131224';
+import * as store from './store.js?v=20260930205333';
+import * as photosLib from './photos.js?v=20260930205333';
+import * as drive from './drive.js?v=20260930205333';
+import * as formphotos from './formphotos.js?v=20260930205333';
+import { CLIENT_ID, API_KEY, FORM_SHEET_ID } from './config.js?v=20260930205333';
+import * as formsheet from './formsheet.js?v=20260930205333';
+import * as sync from './sync.js?v=20260930205333';
+import { makeZip, readZip } from './zip.js?v=20260930205333';
+import { buildSheets, loadTemplates, fitPage, printableDocument, PAGE_WIDTH, PAGE_HEIGHT, SHEET_TITLES } from './sheet.js?v=20260930205333';
+import { CounselingCsv, decodeCsv, loadJoinMonths, lookupJoinMonth } from '../app/csv.js?v=20260930205333';
+import { buildManifest, normalizeJoinMonth } from '../app/manifest.js?v=20260930205333';
+import { FIELDS, BY_KEY, SECTION_LABEL, PHOTO_ROLES, OPERATOR_PHOTO_ROLES } from '../app/fields.js?v=20260930205333';
+import * as rules from '../app/rules.js?v=20260930205333';
+import * as monthly from '../app/monthly.js?v=20260930205333';
+import { parseMenu } from '../app/menu.js?v=20260930205333';
+import { buildContext } from '../app/context.js?v=20260930205333';
+import * as validate from '../app/validate.js?v=20260930205333';
+import * as submissions from '../app/submissions.js?v=20260930205333';
+import { normalize } from '../app/text.js?v=20260930205333';
+import { hasCurrentDelivery, deliveryStatus } from '../app/delivery.js?v=20260930205333';
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g,
@@ -319,6 +320,24 @@ $('monthlyCsv').onchange = async (event) => {
   }
 };
 
+/**
+ * 月次フォームの回答シートをドライブから直接読む（CSVの書き出し・読み込みは不要）。
+ * ドライブにつないでいるときだけ動く。読めなかったときは、前に読んだ内容をそのまま使う。
+ */
+async function refreshFormSheet({ quiet = true } = {}) {
+  if (!drive.status().signedIn || !S.csv) return false;
+  try {
+    const got = await formsheet.loadMonthly(FORM_SHEET_ID, drive);
+    await saveSource({ monthly_text: got.text, monthly_name: `${got.fileName}／${got.sheetName}（ドライブから自動）` });
+    renderHome();
+    if (!quiet) toast(`月次フォームの回答を読み込みました（${got.answers}件）`);
+    return true;
+  } catch (error) {
+    if (!quiet) toast(`月次フォームの回答を読めませんでした：${error.message}`, true);
+    return false;
+  }
+}
+
 /* ---------- データの保存先（Googleドライブ） ---------- */
 function renderDrive() {
   const info = drive.status();
@@ -478,6 +497,7 @@ $('driveConnect').onclick = async () => {
     renderDrive();
     await audit('drive_connected', {});
     toast('ドライブに接続しました。');
+    refreshFormSheet({ quiet: false });
     // フォルダを覚えてある場合は、写真が読めるかをその場で確かめて見せる
     if ((S.formFolders || []).length) $('checkFormFolder').onclick();
   } catch (error) {
@@ -899,16 +919,30 @@ $('homeCreate').onclick = () => goStep('input');
 
 /* ---------- 2回目以降：今月の体重を入れて、写真を差し替えるところから再開する ---------- */
 async function startMonthUpdate() {
+  // 押した時点の最新の回答を読む（さっき送られてきた分も拾えるように）
+  if (drive.status().signedIn) {
+    toast('月次フォームの回答を確認しています…');
+    await refreshFormSheet();
+  }
   const suggested = monthly.monthKey();
   const sub = S.submissions ? submissions.statusFor(S.submissions, S.job.mid, '', S.job.name) : null;
-  // フォームの回答があれば、その内容を初期値にする（手で打ち直さなくて済むように）
-  const month = prompt('何月分の更新ですか？（例 2026-09）', (sub && sub.month) || suggested);
-  if (!month) return;
-  const fromForm = S.submissions ? submissions.statusFor(S.submissions, S.job.mid, month, S.job.name) : null;
-  const weight = prompt(`${month} の体重（kg）を入れてください`, (fromForm && fromForm.weight_kg) || '');
-  if (weight === null) return;
-  const bodyFat = prompt('体脂肪率（%）※計測していなければ空のままでOK', (fromForm && fromForm.body_fat_pct) || '');
-  if (bodyFat === null) return;
+
+  let month, weight, bodyFat;
+  if (sub && sub.submitted && String(sub.weight_kg || '').trim()) {
+    // フォームに今月の回答がある → 聞かずにそのまま使う
+    month = sub.month;
+    weight = String(sub.weight_kg).trim();
+    bodyFat = String(sub.body_fat_pct || '').trim();
+  } else {
+    // 回答が見つからないときだけ手で入れてもらう
+    month = prompt('フォームにこの方の今月の回答が見つかりませんでした。\n何月分の更新ですか？（例 2026-09）', suggested);
+    if (!month) return;
+    weight = prompt(`${month} の体重（kg）を入れてください`, '');
+    if (weight === null) return;
+    bodyFat = prompt('体脂肪率（%）※計測していなければ空のままでOK', '');
+    if (bodyFat === null) return;
+  }
+  const fromForm = sub && sub.submitted && sub.month === month ? sub : null;
 
   const job = S.job;
   const manifest = buildJobManifest(job);
@@ -971,7 +1005,8 @@ async function startMonthUpdate() {
   S.downloaded = false;
   await afterJob();
   goStep('photo');
-  toast(`${month} 分の更新を開始しました。${photoNote}${notes.length ? '（' + notes.join(' ／ ') + '）' : ''}`);
+  const formNote = fromForm ? `フォームの回答（${fromForm.at}）から 体重${weight}kg${bodyFat ? `・体脂肪率${bodyFat}%` : ''} を入れました。` : '';
+  toast(`${month} 分の更新を開始しました。${formNote}${photoNote}${notes.length ? '（' + notes.join(' ／ ') + '）' : ''}`);
 }
 
 /* ---------- 1. 受講生を選ぶ ---------- */
@@ -2010,3 +2045,4 @@ renderMapping();
 refreshCandidate();
 await afterJob();
 goStep('home');
+refreshFormSheet();

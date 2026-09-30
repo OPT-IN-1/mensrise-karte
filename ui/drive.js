@@ -229,6 +229,12 @@ export const getJson = (id) => getFile(id).then((r) => r.json());
 export const getBlob = (id) => getFile(id).then((r) => r.blob());
 export const remove = (id) => call(`${API}/${id}`, { method: 'DELETE' });
 
+/** Googleのファイル（スプレッドシートなど）を別の形式で書き出して受け取る。読むだけ。 */
+export const exportFile = (id, mimeType) => call(`${API}/${id}/export?${new URLSearchParams({ mimeType })}`).then((r) => r.blob());
+/** ファイル名だけを調べる。 */
+export const fileName = (id) => call(`${API}/${id}?${query({ fields: 'name' })}`).then((r) => r.json()).then((f) => f.name || '');
+
+
 /* ---------- ドライブの他のフォルダを、担当者に選んでもらう ---------- */
 //
 // drive.file の権限では、このツールが作っていないファイルは読めない。
