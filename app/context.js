@@ -1,11 +1,11 @@
 // カルテ5枚に差し込む値をすべて組み立てる。
 // 判定結果（rules.js）と本人の回答（manifest）から、テンプレートの190項目を作る。
 
-import * as plan from './plan.js?v=20260930222040';
-import * as fig from './figure.js?v=20260930222040';
-import * as menuMod from './menu.js?v=20260930222040';
-import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260930222040';
-import { meaningful } from './text.js?v=20260930222040';
+import * as plan from './plan.js?v=20260930224008';
+import * as fig from './figure.js?v=20260930224008';
+import * as menuMod from './menu.js?v=20260930224008';
+import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260930224008';
+import { meaningful } from './text.js?v=20260930224008';
 
 const NAV_ITEMS = [
   ['1', '基本情報 & ゴール設定'], ['2', '美容カルテ'], ['3', '筋トレカルテ'],
@@ -134,7 +134,7 @@ const signed = (value, unit) => `${value > 0 ? '+' : (value < 0 ? '-' : '±')}${
  * 今月の重点を決める。記録が1回しかない初回は null（欄ごと出さない）。
  */
 export function monthlyReview({ progress = {}, recorded = [], direction = '', goalWeightText = '',
-  goalBfText = '', targetKcal = '', frequency = 2 }) {
+  goalBfText = '', targetKcal = '', pfc = {} }) {
   if (recorded.length < 2) return null;
   const prevKey = recorded[recorded.length - 2], lastKey = recorded[recorded.length - 1];
   const prev = progress[prevKey] || {}, last = progress[lastKey] || {};
@@ -160,27 +160,35 @@ export function monthlyReview({ progress = {}, recorded = [], direction = '', go
     goal.push({ t: left > 0 ? `体脂肪率：あと ${plan.fmt(left, 1)}pt（目標 ${plan.fmt(gB, 1)}%${/以下/.test(goalBfText) ? '以下' : ''}）` : `体脂肪率：目標 ${plan.fmt(gB, 1)}% を達成` });
   }
 
-  // 方針に対して、前回からどちらへ動いたか
-  const toward = (d, wantDown) => (d === null || d === 0 ? 0 : ((d < 0) === wantDown ? 1 : -1));
-  const scoreW = toward(dW, cut);
-  const scoreB = dB === null ? 0 : toward(dB, true);   // 体脂肪率はどちらの方針でも下がるほうが良い
+  // 評価と、今月の食事の数字。体脂肪率がどう動いたかを一番に見る
+  // （減量でも増量でも、体脂肪率は下がるほうが本人の目標に近づく）。
   const period = `${monthOnly(prevKey)} → ${monthOnly(lastKey)}`;
-  const kcal = targetKcal ? `${targetKcal}kcal` : '目標カロリー';
-  let verdict, focus;
-  if (scoreW >= 0 && scoreB >= 0 && (scoreW + scoreB) > 0) {
-    verdict = '目標に向かって順調に進んでいます。今のやり方を続けましょう。';
-    focus = [`1日 ${kcal} を今月も継続する`, `週${frequency}回のトレーニングを継続する`, 'たんぱく質を毎食とり、筋肉を落とさない'];
-  } else if (scoreW <= 0 && scoreB <= 0 && (scoreW + scoreB) < 0) {
-    verdict = cut
-      ? '前回より体重・体脂肪率が増え、目標と逆の動きです。今月は食事の管理から立て直しましょう。'
-      : '前回より体重が減り、目標と逆の動きです。今月は食べる量から立て直しましょう。';
-    focus = cut
-      ? [`1日 ${kcal} を毎日守る（食事記録で必ず確認）`, `週${frequency}回のトレーニングを予定どおり行う`, '体重・体脂肪率を毎朝同じ条件で記録する']
-      : [`1日 ${kcal} まで食べきる（不足しやすい）`, 'たんぱく質を毎食とる', `週${frequency}回のトレーニングを予定どおり行う`];
+  const goalBf = gB !== null ? `目標の体脂肪率${plan.fmt(gB, 1)}%${/以下/.test(goalBfText) ? '以下' : ''}` : '目標';
+  const fatUp = dB !== null && dB > 0;
+  const fatDown = dB !== null && dB < 0;
+  const weightWrong = dW !== 0 && ((dW > 0) === cut);   // 減量なのに増えた／増量なのに減った
+  let verdict;
+  if (fatUp) {
+    verdict = `体脂肪率が${signed(dB, 'pt')}上がっています。${goalBf}に向けて、脂質は決めた量に必ず収め、たんぱく質と炭水化物は決めた量をしっかりとりましょう。`;
+  } else if (!cut && dW <= 0) {
+    verdict = '体重が増えていません。炭水化物を中心に、決めた量を毎日食べきりましょう。';
+  } else if (fatDown || !weightWrong) {
+    verdict = `${fatDown ? '体脂肪率が下がっていて、' : ''}順調です。今月も同じ数字を守りましょう。`;
   } else {
-    verdict = '体重と体脂肪率で動きが分かれています。数字の測り方をそろえつつ、今の方針を続けましょう。';
-    focus = [`1日 ${kcal} を守る（食事記録で確認）`, `週${frequency}回のトレーニングを継続する`, '体重・体脂肪率を毎朝同じ条件（起床・トイレ後）で測る'];
+    verdict = '体重が目標と逆に動いています。まずは1日の合計カロリーと、下の3つの数字を毎日守りましょう。';
   }
+
+  // 1日の数字と1食あたり（3食で割る）
+  const perMeal = (grams) => plan.fmt(plan.num(grams) / 3, 0);
+  const focus = [];
+  if (pfc.fat_g) focus.push(`脂質：1日 ${pfc.fat_g}g 以内（1食 ${perMeal(pfc.fat_g)}g 以内）に必ず収める`);
+  if (pfc.protein_g) focus.push(`たんぱく質：1日 ${pfc.protein_g}g（1食 約${perMeal(pfc.protein_g)}g）を必ずとる`);
+  if (pfc.carb_g) {
+    focus.push(cut
+      ? `炭水化物：1日 ${pfc.carb_g}g（1食 約${perMeal(pfc.carb_g)}g）は抜かずにとる`
+      : `炭水化物：1日 ${pfc.carb_g}g（1食 約${perMeal(pfc.carb_g)}g）を食べきる`);
+  }
+  if (targetKcal) focus.push(`合計：1日 ${targetKcal}kcal（食事記録で毎日確認）`);
   return { period, change, goal, verdict, focus: focus.map((t) => ({ t })) };
 }
 
@@ -295,7 +303,8 @@ export function buildContext(input) {
   // 同じ内容のカルテを毎月渡さないため、その月ならではの中身をここで作る。
   const review = monthlyReview({
     progress, recorded, direction: goals.direction, goalWeightText, goalBfText,
-    targetKcal: nutrition.target_kcal, frequency,
+    targetKcal: nutrition.target_kcal,
+    pfc: { protein_g: nutrition.protein_g, fat_g: nutrition.fat_g, carb_g: nutrition.carb_g },
   });
 
   // --- ヘア ---
