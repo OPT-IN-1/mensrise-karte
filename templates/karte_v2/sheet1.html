@@ -80,6 +80,14 @@
           {{#has_body_fat}}<tr><td>体脂肪率（%）</td>{{#bf_row}}<td class="c {{hi}}">{{v}}</td>{{/bf_row}}</tr>{{/has_body_fat}}
         </table>
         <div class="note">※ 毎月の進捗フォームを記入後、このシートに反映します。空欄は未記入です。</div>
+        {{#is_monthly}}
+        <div class="sub-h">今月のふりかえり（{{review_period}}）</div>
+        <div class="review">
+          <div class="card cream"><div class="l">前回からの変化</div>{{#review_change}}<div class="v">{{t}}</div>{{/review_change}}</div>
+          <div class="card"><div class="l">目標まで</div>{{#review_goal}}<div class="v">{{t}}</div>{{/review_goal}}<div class="note">{{review_verdict}}</div></div>
+          <div class="card"><div class="l">今月の重点</div><ul class="focus">{{#review_focus}}<li>{{t}}</li>{{/review_focus}}</ul></div>
+        </div>
+        {{/is_monthly}}
         <div class="sub-h">3ヶ月目標サマリー（各分野）</div>
         <div class="g2">
           {{#summary3m}}

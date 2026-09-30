@@ -58,8 +58,10 @@
         </div>
 
         <div class="sec">
-          <div class="sec-h"><span class="no">③</span><span class="t">単発タスク（今すぐやること）</span><span class="en">ONE-TIME TASK</span></div>
+          {{^is_monthly}}<div class="sec-h"><span class="no">③</span><span class="t">単発タスク（今すぐやること）</span><span class="en">ONE-TIME TASK</span></div>{{/is_monthly}}
+          {{#is_monthly}}<div class="sec-h"><span class="no">③</span><span class="t">前回の単発タスク — できたか確認</span><span class="en">CHECK</span></div>{{/is_monthly}}
           <div class="rule"></div>
+          {{#is_monthly}}<div class="note">済んだものにチェック。まだのものは、今月中に終わらせましょう。</div>{{/is_monthly}}
           <ul class="chk">
             <li class="hi"><span class="b"></span><span class="tx"><b>{{eyebrow_care}}を予約する</b><small>{{eyebrow_guide}}</small></span><span class="tag">美容</span></li>
             {{#onetime}}<li><span class="b"></span><span class="tx"><b>{{t}}</b></span><span class="tag">{{tag}}</span></li>{{/onetime}}

@@ -287,3 +287,10 @@ table.t.fixed th, table.t.fixed td { font-size: 7.8px; padding: 3px 3px; overflo
 
 .prod .noimg-sm { width: 34px; height: 34px; flex: none; display: flex; align-items: center; justify-content: center;
   border: 1px dashed var(--line); border-radius: 3px; color: var(--muted2); font-size: 6px; text-align: center; }
+
+/* 今月のふりかえり（2ヶ月目以降の1枚目） */
+.review { display: grid; grid-template-columns: 1.1fr 1fr 1.2fr; gap: 6px; margin-bottom: 4px; }
+.review .card + .card { margin-top: 0; }
+.review .v { font-size: 8.6px; line-height: 1.55; }
+.review .note { margin-top: 3px; line-height: 1.5; }
+.review .focus { margin: 2px 0 0; padding-left: 12px; font-size: 8.4px; line-height: 1.55; }

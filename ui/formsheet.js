@@ -4,7 +4,7 @@
 // 「今月分に更新」を押したときにここを読み、体重・体脂肪率を自動で入れる。
 // （以前はCSVを書き出して読み込ませる必要があった）
 
-import { readSheets } from './xlsx.js?v=20260930211257';
+import { readSheets } from './xlsx.js?v=20260930222040';
 
 const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
