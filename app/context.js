@@ -1,11 +1,11 @@
 // カルテ5枚に差し込む値をすべて組み立てる。
 // 判定結果（rules.js）と本人の回答（manifest）から、テンプレートの190項目を作る。
 
-import * as plan from './plan.js?v=20260930210611';
-import * as fig from './figure.js?v=20260930210611';
-import * as menuMod from './menu.js?v=20260930210611';
-import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260930210611';
-import { meaningful } from './text.js?v=20260930210611';
+import * as plan from './plan.js?v=20260930211257';
+import * as fig from './figure.js?v=20260930211257';
+import * as menuMod from './menu.js?v=20260930211257';
+import { productContext, styleEntryFor, looksLikeStyle } from './products.js?v=20260930211257';
+import { meaningful } from './text.js?v=20260930211257';
 
 const NAV_ITEMS = [
   ['1', '基本情報 & ゴール設定'], ['2', '美容カルテ'], ['3', '筋トレカルテ'],
@@ -210,11 +210,20 @@ export function buildContext(input) {
   const months = plan.progressMonths(joinMonth, 7);
   const measuredW = progressRow(months, progress, 'weight_kg');
   const measuredB = progressRow(months, progress, 'body_fat_pct');
+  // 入会月の欄は「入会時の記録」を出す。いまの体重（member）は月次更新で上書きされるので、
+  // 記録があればそちらを使う（無ければ一番古い記録、それも無ければいまの値）。
+  const recorded = Object.keys(progress || {}).filter((key) => /^\d{4}-\d{2}$/.test(key)).sort();
+  const earliest = (progress || {})[recorded[0]] || {};
+  const baseW = measuredW[0] || (earliest.weight_kg ? plan.fmt(plan.num(earliest.weight_kg), 1) : plan.fmt(plan.num(member.weight_kg), 1));
+  const baseB = measuredB[0] || (earliest.body_fat_pct ? plan.fmt(plan.num(earliest.body_fat_pct), 1) : plan.fmt(plan.num(member.body_fat_pct), 1));
+  // 「現在」の時点。月次更新後は最新の記録の月（入会月のままにしない）
+  const latest = recorded[recorded.length - 1] || '';
+  const currentMonthText = latest ? `${Number(latest.slice(0, 4))}年${Number(latest.slice(5, 7))}月` : joinMonth;
   const weightRow = [], bfRow = [];
   months.forEach((month, index) => {
     if (index === 0) {
-      weightRow.push({ v: plan.fmt(plan.num(member.weight_kg), 1), hi: 'hi' });
-      bfRow.push({ v: plan.fmt(plan.num(member.body_fat_pct), 1), hi: 'hi' });
+      weightRow.push({ v: baseW, hi: 'hi' });
+      bfRow.push({ v: baseB, hi: 'hi' });
       return;
     }
     const hitW = index === weightGoalIndex, hitB = index === bfGoalIndex;
@@ -223,7 +232,7 @@ export function buildContext(input) {
   });
 
   // --- ヘア ---
-  const schedule = plan.hairSchedule(hair.days_label, joinMonth);
+  const schedule = plan.hairSchedule(hair.days_label, currentMonthText);
   const timeline = schedule.timeline.map((step) => ({ ...step, on: ['現在', '目標'].includes(step.t) ? 'on' : '' }));
 
   const operatorInput = meaningful(hairSrc.hair_target_style || '');
@@ -295,6 +304,8 @@ export function buildContext(input) {
   return {
     // 本人特定・見出し
     mid: member.mid, name: member.name, nickname: member.nickname, join_month: joinMonth,
+    // 定量ゴールの「現在」の行の時点。月次更新後はその月（入会月のままにしない）
+    current_month_text: currentMonthText,
     name_display: nameDisplay,
     join_month_text: !['', '—'].includes(joinMonth) ? `${joinMonth}入会` : '—',
     age, height_cm: height, weight_kg: weight, body_fat_pct: withUnit(member.body_fat_pct, '%'),
