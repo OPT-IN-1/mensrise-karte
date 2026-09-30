@@ -88,12 +88,16 @@ export async function scanResponses(folderIds, call) {
  * その受講生の写真を、用途ごとに1枚ずつ選ぶ。
  * 同じ人が複数回出していれば、いちばん新しいものを使う。
  */
+// 登録名の「井上颯人（イノウエハヤト）」のようなふりがなを外す。
+// フォームのファイル名には「IMG_4682 - 井上颯人.jpeg」と氏名だけが付くため。
+const withoutReading = (text) => String(text || '').replace(/[（(][^）)]*[）)]/g, '').trim();
+
 export function pickFor(scanned, name, normalize) {
-  const want = normalize(name);
+  const want = normalize(withoutReading(name));
   const out = {};
   for (const [role, files] of Object.entries(scanned || {})) {
     const mine = files
-      .filter((file) => file.owner && normalize(file.owner) === want)
+      .filter((file) => file.owner && normalize(withoutReading(file.owner)) === want)
       .sort((a, b) => String(b.at).localeCompare(String(a.at)));
     if (mine.length) out[role] = mine[0];
   }
